@@ -28,6 +28,8 @@ unsetopt autocd beep
 bindkey -v
 # End of lines configured by zsh-newuser-install
 
+setopt kshglob
+
 PROMPT='[%~%(!.#.$)] '
 RPROMPT='[%n@%m, %D{%a %b %d, %H:%M] '
 
