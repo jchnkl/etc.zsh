@@ -54,4 +54,26 @@ music=/data/media/music
 movie=/data/media/movie
 jdl=/data/media/jdl/downloads
 
+# open files with programs matching the extension
+function setsuf() {
+  PROG=${1}
+  shift
+  for i in ${*}; do
+    alias -s ${i}=${PROG};
+    alias -s ${(U)i}=${PROG};
+  done
+}
+
+PDFSUF=(pdf dvi ps)
+IMGSUF=(jpg nef png tif)
+TXTSUF=(tex txt x10 hs h hpp c cc cpp java)
+
+if [ ${DISPLAY} ]; then
+  setsuf gvim ${TXTSUF}
+  setsuf evince ${PDFSUF}
+  setsuf geeqie ${IMGSUF}
+else
+  setsuf vim ${TXTSUF}
+fi
+
 source ${HOME}/.profile
