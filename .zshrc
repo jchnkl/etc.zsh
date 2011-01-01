@@ -39,6 +39,8 @@ zle -N edit-command-line
 bindkey -M vicmd v edit-command-line
 bindkey "^[[Z" reverse-menu-complete
 
+TIMEFMT="user: %U kernel: %S elapsed: %E cpu%%: %P totalmem: %K maxmem: %M"
+
 # named directories
 doc=${HOME}/doc
 pdf=${HOME}/pdf
