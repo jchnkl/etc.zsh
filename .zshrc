@@ -39,4 +39,17 @@ zle -N edit-command-line
 bindkey -M vicmd v edit-command-line
 bindkey "^[[Z" reverse-menu-complete
 
+# named directories
+doc=${HOME}/doc
+pdf=${HOME}/pdf
+src=${HOME}/src
+tex=${HOME}/tex
+tmp=${HOME}/tmp
+usr=${HOME}/usr
+work=${HOME}/work
+media=/data/media
+music=/data/media/music
+movie=/data/media/movie
+jdl=/data/media/jdl/downloads
+
 source ${HOME}/.profile
