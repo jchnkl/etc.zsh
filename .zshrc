@@ -40,12 +40,11 @@ bindkey -M vicmd v edit-command-line
 bindkey "^[[Z" reverse-menu-complete
 
 TIMEFMT="
+  real: %E
   user: %U
-  kernel: %S
-  elapsed: %E
+  system: %S
   cpu: %P
-  totalmem: %K
-  maxmem: %M
+  mem: %M
 "
 
 # named directories
