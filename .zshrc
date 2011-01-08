@@ -29,6 +29,7 @@ bindkey -v
 # End of lines configured by zsh-newuser-install
 
 setopt kshglob
+setopt AUTO_CD
 
 PROMPT='[%~%(!.#.$)] '
 RPROMPT='[%n@%m, %D{%a %b %d, %H:%M] '
