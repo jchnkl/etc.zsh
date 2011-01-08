@@ -30,7 +30,10 @@ bindkey -v
 
 setopt kshglob
 setopt AUTO_CD
+setopt AUTO_PUSHD
+setopt CDABLE_VARS
 setopt CHASE_DOTS
+setopt CHASE_LINKS
 
 PROMPT='[%~%(!.#.$)] '
 RPROMPT='[%n@%m, %D{%a %b %d, %H:%M] '
