@@ -30,6 +30,7 @@ bindkey -v
 
 setopt kshglob
 setopt AUTO_CD
+setopt CHASE_DOTS
 
 PROMPT='[%~%(!.#.$)] '
 RPROMPT='[%n@%m, %D{%a %b %d, %H:%M] '
