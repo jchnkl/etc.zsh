@@ -75,9 +75,12 @@ function setsuf() {
   done
 }
 
+MOVSUF=(mkv mpg avi)
 PDFSUF=(pdf dvi ps)
 IMGSUF=(jpg nef png tif)
 TXTSUF=(tex txt x10 hs h hpp c cc cpp java)
+
+setsuf mplayer ${MOVSUF}
 
 if [ ${DISPLAY} ]; then
   setsuf gvim ${TXTSUF}
