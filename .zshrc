@@ -63,6 +63,8 @@ work=${HOME}/work
 media=/data/media
 music=/data/media/music
 movie=/data/media/movie
+img=/data/media/img
+pic=/data/media/img/pic
 jdl=/data/media/jdl/downloads
 
 # open files with programs matching the extension
