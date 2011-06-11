@@ -35,7 +35,7 @@ setopt CDABLE_VARS
 setopt CHASE_DOTS
 setopt CHASE_LINKS
 
-PROMPT='[%~%(!.#.$)] '
+PROMPT='[%h %~%(!.#.$)] '
 RPROMPT='[%n@%m, %D{%a %b %d, %H:%M] '
 
 autoload -U edit-command-line
