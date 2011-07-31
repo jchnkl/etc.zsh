@@ -28,12 +28,10 @@ unsetopt autocd beep
 bindkey -v
 # End of lines configured by zsh-newuser-install
 
-setopt kshglob
-setopt AUTO_CD
-setopt AUTO_PUSHD
-setopt CDABLE_VARS
-setopt CHASE_DOTS
-setopt CHASE_LINKS
+# zshoptions(1)
+setopt kshglob autocd autopushd cdablevars chasedots chaselinks histnostore
+setopt histignorealldups histsavenodups histreduceblanks histverify
+setopt incappendhistory sharehistory transientrprompt
 
 PROMPT='[%h %~%(!.#.$)] '
 RPROMPT='[%n@%m, %D{%a %b %d, %H:%M] '
