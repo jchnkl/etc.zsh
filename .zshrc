@@ -31,7 +31,7 @@ bindkey -v
 # zshoptions(1)
 setopt kshglob autocd autopushd cdablevars chasedots chaselinks histnostore
 setopt histignorealldups histsavenodups histreduceblanks histverify
-setopt incappendhistory transientrprompt
+setopt incappendhistory transientrprompt nohup
 
 PROMPT='[%h %~%(!.#.$)] '
 RPROMPT='[%n@%m, %D{%a %b %d, %H:%M] '
