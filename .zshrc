@@ -24,20 +24,21 @@ zstyle :compinstall filename '/home/jochen/.zshrc'
 
 autoload -Uz compinit
 compinit
+
 # End of lines added by compinstall
 # Lines configured by zsh-newuser-install
 HISTFILE=~/.histfile
 HISTSIZE=9999
 SAVEHIST=9999
-setopt appendhistory extendedglob nomatch notify
-unsetopt autocd beep
 bindkey -v
 # End of lines configured by zsh-newuser-install
 
 # zshoptions(1)
+setopt appendhistory extendedglob nomatch notify
 setopt kshglob autocd autopushd cdablevars chasedots chaselinks histnostore
 setopt histignorealldups histsavenodups histreduceblanks histverify
 setopt incappendhistory transientrprompt nohup
+unsetopt beep
 
 PROMPT='[%h %~%(!.#.$)] '
 RPROMPT='[%n@%m, %D{%a %b %d, %H:%M] '
