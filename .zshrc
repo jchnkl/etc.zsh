@@ -3,6 +3,9 @@
 # add custom completion scripts
 fpath=(~/.zsh/completion $fpath)
 
+zstyle ':completion:*' use-cache on
+zstyle ':completion:*' cache-path ~/.zsh/cache
+
 zstyle ':completion:*' completer _oldlist _expand _complete _ignored _match _correct _approximate _prefix
 zstyle ':completion:*' completions 1
 zstyle ':completion:*' condition 1
