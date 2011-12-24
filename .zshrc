@@ -12,14 +12,20 @@ zstyle ':completion:*' condition 1
 zstyle ':completion:*' format '%d'
 zstyle ':completion:*' glob 1
 zstyle ':completion:*' ignore-parents parent pwd .. directory
-zstyle ':completion:*' list-colors ''
+#zstyle ':completion:*' list-colors ''
 zstyle ':completion:*' list-prompt %SAt %p: Hit TAB for more, or the character to insert%s
 zstyle ':completion:*' max-errors 1 numeric
-zstyle ':completion:*' menu select=long
+#zstyle ':completion:*' menu select=1
+#zstyle ':completion:*' menu select=long
 zstyle ':completion:*' preserve-prefix '//[^/]##/'
 zstyle ':completion:*' select-prompt %SScrolling active: current selection at %p%s
 zstyle ':completion:*' squeeze-slashes true
 zstyle ':completion:*' substitute 1
+
+#zstyle ':completion:*' insert-unambiguous true
+#zstyle ':completion:*' menu select=1 eval "$(dircolors -b)"
+zstyle ':completion:*' menu select=long eval "$(dircolors -b)"
+zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
 zstyle :compinstall filename '/home/jochen/.zshrc'
 
 autoload -Uz compinit
@@ -27,6 +33,10 @@ compinit
 
 # End of lines added by compinstall
 # Lines configured by zsh-newuser-install
+
+autoload -Uz colors; colors
+autoload -Uz vcs_info; vcs_info
+
 HISTFILE=~/.histfile
 HISTSIZE=9999
 SAVEHIST=9999
@@ -37,11 +47,13 @@ bindkey -v
 setopt appendhistory extendedglob nomatch notify
 setopt kshglob autocd autopushd cdablevars chasedots chaselinks histnostore
 setopt histignorealldups histsavenodups histreduceblanks histverify
-setopt incappendhistory transientrprompt nohup
+setopt incappendhistory nohup # transientrprompt
+setopt listrowsfirst # menu_complete
 unsetopt beep
 
-PROMPT='[%h %~%(!.#.$)] '
-RPROMPT='[%n@%m, %D{%a %b %d, %H:%M] '
+#PROMPT='[%h %~%(!.#.$)] '
+#RPROMPT='[%n@%m, %D{%a %b %d, %H:%M] '
+#RPROMPT='[%n@%m, %D{%A, %d. %B %Y %H:%M}]'
 
 autoload -U edit-command-line
 zle -N edit-command-line
@@ -49,6 +61,8 @@ zle -N edit-command-line
 bindkey -M vicmd v edit-command-line
 bindkey "^[[Z" reverse-menu-complete
 
+
+REPORTTIME=2
 TIMEFMT="
   real: %E
   user: %U
@@ -103,5 +117,7 @@ r() {
   unfunction $f:t 2> /dev/null
   autoload -U $f:t
 }
+
+for conf in ~/.zsh/*.zsh; do source $conf; done
 
 source ${HOME}/.profile
