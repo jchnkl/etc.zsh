@@ -1,3 +1,5 @@
+# global variables: pelems _LONGWEATHER _SHRTWEATHER _SHOMEP _LHOMEP
+
 PERIOD=600
 
 local _NCOLO="%14F" # 66
@@ -16,11 +18,12 @@ local _HIST="!%h";
 local _PWD="%~";
 local _LOGIN="%n";
 local _HOST="%2m";
-local _LONGDATE="%D{%A, %d. %B %Y %H:%M}";
-local _SHRTDATE="%D{%a, %d. %b %y %H:%M}";
+local _LONGDATE="%D{%A, %d. %B %Y | %H:%M}";
+local _SHRTDATE="%D{%a, %d. %b %y | %H:%M}";
 local _VCS="${vcs_info_msg_0_}";
 
 
+# global array
 typeset -A pelems
 pelems+=(${_WS}		"${_WS}")
 pelems+=(${_SEP}	"${_SCOLO}${_SEP}%f")
@@ -33,13 +36,10 @@ pelems+=(${_HIST}	"${_NCOLO}!${_EMPH}%h%f")
 pelems+=(${_PWD}	"%4F${_PWD}%f")
 pelems+=(${_LOGIN}	"${_ECOLO}${_LOGIN}%f")
 pelems+=(${_HOST}	"${_ECOLO}${_HOST}%f")
-pelems+=(${_LONGDATE}	"${_EMPH}%D{%A}%f, ${_NCOLO}%D{%d. %B %Y} ${_EMPH}%D{%H:%M}%f")
-pelems+=(${_SHRTDATE}	"${_EMPH}%D{%a}%f, ${_NCOLO}%D{%d. %b %y} ${_EMPH}%D{%H:%M}%f")
+pelems+=(${_LONGDATE}	"${_EMPH}%D{%A}%f, ${_EMPH}%D{%d}%f${_NCOLO}%D{. %B %Y} ${_SCOLO}${_SEP}%f ${_EMPH}%D{%H:%M}%f")
+pelems+=(${_SHRTDATE}	"${_EMPH}%D{%a}%f, ${_EMPH}%D{%d}%f${_NCOLO}%D{. %b %y} ${_SCOLO}${_SEP}%f ${_EMPH}%D{%H:%M}%f")
 pelems+=(${_VCS}	"${vcs_info_msg_0_}")
 
-
-autoload zsh/terminfo;
-if [[ "$terminfo[colors]" -ge 8 ]]; then _FANCY=true; else _FANCY=false; fi
 
 # do the heavy lifting only every $PERIOD
 function updateWeather() {
@@ -58,27 +58,40 @@ function updateWeather() {
     else TCOLOR=red;
     fi
 
+    local _PCOND _CCOND
+    for c1 c2 in ${(s:; :)_COND}; do
+        if [ -n "${c2}" ]; then
+            _PCOND+=("%{%${#c1}G${c1}%}, %{%${#c2}G${c2}%")
+            _CCOND+=("${_NCOLO}%{%${#c1}G${c1}%}${_SCOLO}, ${_NCOLO}%{%${#c2}G${c2}%}")
+        else
+            _PCOND+=("%{%${#c1}G${c1}%}")
+            _CCOND+=("${_NCOLO}%{%${#c1}G${c1}%}${_SCOLO}")
+        fi
+    done
+
+    pelems+=(${_PCOND} ${_CCOND})
+
     local _PTEMP="%{%${#_TEMP}G${_TEMP}%}°C"
     local _PWIND="%{%${#_WIND}G${_WIND}%}kmh"
-    local _PCOND="%{%${#_COND}G${_COND}%}"
     local _PSKYC="%{%${#_SKYC}G${_SKYC}%}"
 
     pelems+=(${_PTEMP} "%{$fg[${TCOLOR}]%}%{%${#_TEMP}G${_TEMP}%}%{$fg[default]%}${_NCOLO}°C%f")
     pelems+=(${_PWIND} "${_NCOLO}%{%${#_WIND}G${_WIND}%}kmh%f")
-    pelems+=(${_PCOND} "${_NCOLO}%{%${#_COND}G${_COND}%}%f")
     pelems+=(${_PSKYC} "${_NCOLO}%{%${#_SKYC}G${_SKYC}%}%f")
 
+    # global variable
     _SHRTWEATHER=${_PTEMP}
     pelems[${_SHRTWEATHER}]=${pelems[${_PTEMP}]}
 
-    local _WP
-    _WP=(${_PTEMP} ${_COMMA} ${_WS} ${_PWIND} ${_COMMA} ${_WS})
+    local _WP _PSEP=${_COMMA}'\0'${_WS}
+    concatWith ${_PSEP} ${_PTEMP} ${_PWIND}; _WP+=($reply ${(s:\0:)_PSEP})
     if [ -z "${_COND}" ]; then
         _WP+=(${_PSKYC})
     else
-        _WP+=(${_PCOND} ${_COMMA} ${_WS} ${_PSKYC})
+        concatWith ${_PSEP} ${_PCOND} ${_PSKYC}; _WP+=($reply)
     fi
 
+    # global variable
     _LONGWEATHER=
     local _CLONGWEATHR
     for e in ${_WP}; do
@@ -89,36 +102,31 @@ function updateWeather() {
 
 }
 
-periodic_functions+=(updateWeather)
 
-[ -z "${_SHRTWEATHER}" -o -z "${_LONGWEATHER}" ] && updateWeather
-
-
-local _BOTPROMPT=
-for e in ${_LBRKT} ${_HIST} ${_WS} ${_PCHAR} ${_RBRKT} ${_WS}; do
-    if ${_FANCY}; then
-        _BOTPROMPT+=${(v)pelems[${e}]}
+function updatePrompt() {
+    # global variables
+    _SHOMEP= _LHOMEP=
+    local _PSEP=${_WS}'\0'${_SEP}'\0'${_WS}
+    if [ -z "${SSH_CONNECTION}" ]; then
+        concatWith ${_PSEP} ${_LONGWEATHER} ${_LONGDATE}; _LHOMEP+=(${reply})
+        concatWith ${_PSEP} ${_PWD} ${_SHRTWEATHER} ${_SHRTDATE}; _SHOMEP+=(${reply})
     else
-        _BOTPROMPT+=${(k)pelems[${e}]}
+        local _LGNATHST=${_LOGIN}'\0'${_HOSTSEP}'\0'${_HOST}
+        concatWith ${_PSEP} ${_LGNATHST} ${_LONGDATE}; _LHOMEP+=(${reply})
+        concatWith ${_PSEP} ${_PWD} ${_LGNATHST} ${_SHRTDATE}; _SHOMEP+=(${reply})
     fi
-done
-
-PROMPT="
-${_BOTPROMPT}"
+}
 
 
-local _SHOMEP _LHOMEP
-if [ -z "${SSH_CONNECTION}" ]; then
-    _LHOMEP+=(${_LONGWEATHER} ${_WS} ${_SEP} ${_WS} ${_LONGDATE})
-else
-    _LHOMEP+=(${_LOGIN} ${_HOSTSEP} ${_HOST} ${_WS} ${_SEP} ${_WS} ${_LONGDATE})
-fi
+# splitting of arguments is based on '\0'
+function concatWith() {
+    local _concatWithSep=${1}; shift;
 
-if [ -z "${SSH_CONNECTION}" ]; then
-    _SHOMEP+=(${_PWD} ${_WS} ${_SEP} ${_WS} ${_SHRTWEATHER} ${_WS} ${_SEP} ${_WS} ${_SHRTDATE})
-else
-    _SHOMEP+=(${_PWD} ${_WS} ${_SEP} ${_WS} ${_LOGIN} ${_HOSTSEP} ${_HOST} ${_WS} ${_SEP} ${_WS} ${_SHRTDATE})
-fi
+    reply=(${(s:\0:)1}); shift;
+    while [ -n "${1}" ]; do
+        reply+=(${(s:\0:)_concatWithSep} ${(s:\0:)1}); shift;
+    done
+}
 
 
 function precmd() {
@@ -148,3 +156,27 @@ function precmd() {
     done
 
 }
+
+
+autoload zsh/terminfo;
+if [[ "$terminfo[colors]" -ge 8 ]]; then _FANCY=true; else _FANCY=false; fi
+
+periodic_functions+=(updateWeather updatePrompt)
+
+if [ -z "${_SHRTWEATHER}" -o -z "${_LONGWEATHER}" ]; then
+    updateWeather
+    updatePrompt
+fi
+
+
+local _BOTPROMPT=
+for e in ${_LBRKT} ${_HIST} ${_WS} ${_PCHAR} ${_RBRKT} ${_WS}; do
+    if ${_FANCY}; then
+        _BOTPROMPT+=${(v)pelems[${e}]}
+    else
+        _BOTPROMPT+=${(k)pelems[${e}]}
+    fi
+done
+
+PROMPT="
+${_BOTPROMPT}"
