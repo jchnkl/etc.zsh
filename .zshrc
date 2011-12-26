@@ -47,7 +47,7 @@ bindkey -v
 setopt appendhistory extendedglob nomatch notify
 setopt kshglob autocd autopushd cdablevars chasedots chaselinks histnostore
 setopt histignorealldups histsavenodups histreduceblanks histverify
-setopt incappendhistory nohup # transientrprompt
+setopt incappendhistory nohup transientrprompt
 setopt listrowsfirst # menu_complete
 unsetopt beep
 
