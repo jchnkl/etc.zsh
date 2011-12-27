@@ -61,19 +61,6 @@ function updateWeather() {
     else TCOLOR=red;
     fi
 
-    local _PCOND _CCOND
-    for c1 c2 in ${(s:; :)_COND}; do
-        if [ -n "${c2}" ]; then
-            _PCOND+=("%{%${#c1}G${c1}%}, %{%${#c2}G${c2}%")
-            _CCOND+=("${_NCOLO}%{%${#c1}G${c1}%}${_SCOLO}, ${_NCOLO}%{%${#c2}G${c2}%}")
-        else
-            _PCOND+=("%{%${#c1}G${c1}%}")
-            _CCOND+=("${_NCOLO}%{%${#c1}G${c1}%}${_SCOLO}")
-        fi
-    done
-
-    pelems+=(${_PCOND} ${_CCOND})
-
     local _PTEMP="%{%${#_TEMP}G${_TEMP}%}°C"
     local _PWIND="%{%${#_WIND}G${_WIND}%}kmh"
     local _PSKYC="%{%${#_SKYC}G${_SKYC}%}"
@@ -86,11 +73,23 @@ function updateWeather() {
     _SHRTWEATHER=${_PTEMP}
     pelems[${_SHRTWEATHER}]=${pelems[${_PTEMP}]}
 
-    local _WP _PSEP=${_COMMA}'\0'${_WS}
+    local _WP= _PSEP=${_COMMA}'\0'${_WS}
     concatWith ${_PSEP} ${_PTEMP} ${_PWIND}; _WP+=($reply ${(s:\0:)_PSEP})
     if [ -z "${_COND}" ]; then
         _WP+=(${_PSKYC})
     else
+
+        local _PCOND
+        for c1 c2 in ${(s:; :)_COND}; do
+            if [ -n "${c2}" ]; then
+                _PCOND+=("%{%${#c1}G${c1}%}, %{%${#c2}G${c2}%")
+                pelems+=(${_PCOND} "${_NCOLO}%{%${#c1}G${c1}%}${_SCOLO}, ${_NCOLO}%{%${#c2}G${c2}%}")
+            else
+                _PCOND+=("%{%${#c1}G${c1}%}")
+                pelems+=(${_PCOND} "${_NCOLO}%{%${#c1}G${c1}%}${_SCOLO}")
+            fi
+        done
+
         concatWith ${_PSEP} ${_PCOND} ${_PSKYC}; _WP+=($reply)
     fi
 
