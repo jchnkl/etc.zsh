@@ -44,6 +44,9 @@ pelems+=(${_VCS}	"${vcs_info_msg_0_}")
 # do the heavy lifting only every $PERIOD
 function updateWeather() {
     local WEATHERFILE=${HOME}/.zsh/weather
+    if [ ! -r ${WEATHERFILE} ]; then
+        return
+    fi
     local _TEMP="$(grep "Temperature:" ${WEATHERFILE} | cut -d ' ' -f 2)"
     local _WIND="$(grep "Wind:" ${WEATHERFILE} | cut -d ' ' -f 4,8)"
     local _COND="$(grep "Weather:" ${WEATHERFILE} | cut -d ' ' -f 2-)"
