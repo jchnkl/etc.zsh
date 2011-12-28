@@ -63,22 +63,19 @@ function updateWeather() {
 
     local _PTEMP="%{%${#_TEMP}G${_TEMP}%}°C"
     local _PWIND="%{%${#_WIND}G${_WIND}%}kmh"
-    local _PSKYC="%{%${#_SKYC}G${_SKYC}%}"
 
     pelems+=(${_PTEMP} "%{$fg[${TCOLOR}]%}%{%${#_TEMP}G${_TEMP}%}%{$fg[default]%}${_NCOLO}°C%f")
     pelems+=(${_PWIND} "${_NCOLO}%{%${#_WIND}G${_WIND}%}kmh%f")
-    pelems+=(${_PSKYC} "${_NCOLO}%{%${#_SKYC}G${_SKYC}%}%f")
 
     # global variable
     _SHRTWEATHER=${_PTEMP}
     pelems[${_SHRTWEATHER}]=${pelems[${_PTEMP}]}
 
     local _WP= _PSEP=${_COMMA}'\0'${_WS}
-    concatWith ${_PSEP} ${_PTEMP} ${_PWIND}; _WP+=($reply ${(s:\0:)_PSEP})
-    if [ -z "${_COND}" ]; then
-        _WP+=(${_PSKYC})
-    else
+    concatWith ${_PSEP} ${_PTEMP} ${_PWIND}; _WP=($reply)
 
+    # Conditions are not always present
+    if [ -n "${_COND}" ]; then
         local _PCOND
         for c1 c2 in ${(s:; :)_COND}; do
             if [ -n "${c2}" ]; then
@@ -90,7 +87,14 @@ function updateWeather() {
             fi
         done
 
-        concatWith ${_PSEP} ${_PCOND} ${_PSKYC}; _WP+=($reply)
+        _WP+=(${(s:\0:)_PSEP} ${_PCOND})
+    fi
+
+    # Sky Conditions is not always present
+    if [ -n "${_SKYC}" ]; then
+        local _PSKYC="%{%${#_SKYC}G${_SKYC}%}"
+        pelems+=(${_PSKYC} "${_NCOLO}%{%${#_SKYC}G${_SKYC}%}%f")
+        _WP+=(${(s:\0:)_PSEP} ${_PSKYC})
     fi
 
     # global variable
