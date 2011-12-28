@@ -18,8 +18,9 @@ local _HIST="!%h";
 local _PWD="%~";
 local _LOGIN="%n";
 local _HOST="%2m";
-local _LONGDATE="%D{%A, %d. %B %Y | %H:%M}";
-local _SHRTDATE="%D{%a, %d. %b %y | %H:%M}";
+local _TIME="%D{%H:%M}";
+local _LONGDATE="%D{%A, %d. %B %Y}";
+local _SHRTDATE="%D{%a, %d. %b %y}";
 local _VCS="${vcs_info_msg_0_}";
 
 
@@ -36,8 +37,9 @@ pelems+=(${_HIST}	"${_NCOLO}!${_EMPH}%h%f")
 pelems+=(${_PWD}	"%4F${_PWD}%f")
 pelems+=(${_LOGIN}	"${_ECOLO}${_LOGIN}%f")
 pelems+=(${_HOST}	"${_ECOLO}${_HOST}%f")
-pelems+=(${_LONGDATE}	"${_EMPH}%D{%A}%f, ${_EMPH}%D{%d}%f${_NCOLO}%D{. %B %Y} ${_SCOLO}${_SEP}%f ${_EMPH}%D{%H:%M}%f")
-pelems+=(${_SHRTDATE}	"${_EMPH}%D{%a}%f, ${_EMPH}%D{%d}%f${_NCOLO}%D{. %b %y} ${_SCOLO}${_SEP}%f ${_EMPH}%D{%H:%M}%f")
+pelems+=(${_TIME}	"${_EMPH}%D{%H:%M}%f")
+pelems+=(${_LONGDATE}	"${_EMPH}%D{%A}%f, ${_EMPH}%D{%d}%f${_NCOLO}%D{. %B %Y}")
+pelems+=(${_SHRTDATE}	"${_EMPH}%D{%a}%f, ${_EMPH}%D{%d}%f${_NCOLO}%D{. %b %y}")
 pelems+=(${_VCS}	"${vcs_info_msg_0_}")
 
 
@@ -114,12 +116,12 @@ function updatePrompt() {
     _SHOMEP= _LHOMEP=
     local _PSEP=${_WS}'\0'${_SEP}'\0'${_WS}
     if [ -z "${SSH_CONNECTION}" ]; then
-        concatWith ${_PSEP} ${_LONGWEATHER} ${_LONGDATE}; _LHOMEP+=(${reply})
-        concatWith ${_PSEP} ${_PWD} ${_SHRTWEATHER} ${_SHRTDATE}; _SHOMEP+=(${reply})
+        concatWith ${_PSEP} ${_LONGWEATHER} ${_LONGDATE} ${_TIME}; _LHOMEP+=(${reply})
+        concatWith ${_PSEP} ${_PWD} ${_SHRTWEATHER} ${_SHRTDATE} ${_TIME}; _SHOMEP+=(${reply})
     else
         local _LGNATHST=${_LOGIN}'\0'${_HOSTSEP}'\0'${_HOST}
-        concatWith ${_PSEP} ${_LGNATHST} ${_LONGDATE}; _LHOMEP+=(${reply})
-        concatWith ${_PSEP} ${_PWD} ${_LGNATHST} ${_SHRTDATE}; _SHOMEP+=(${reply})
+        concatWith ${_PSEP} ${_LGNATHST} ${_LONGDATE} ${_TIME}; _LHOMEP+=(${reply})
+        concatWith ${_PSEP} ${_PWD} ${_LGNATHST} ${_SHRTDATE} ${_TIME}; _SHOMEP+=(${reply})
     fi
 }
 
