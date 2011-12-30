@@ -79,7 +79,7 @@ function updateWeather() {
     # Conditions are not always present
     if [ -n "${_COND}" ]; then
         local _PCOND
-        for c1 c2 in ${(s:; :)_COND}; do
+        for c1 c2 in ${(s:\0:S)${_COND}//(; |, )/'\0'}; do # split at commas and semicolons
             if [ -n "${c2}" ]; then
                 _PCOND+=("%{%${#c1}G${c1}%}, %{%${#c2}G${c2}%")
                 pelems+=(${_PCOND} "${_NCOLO}%{%${#c1}G${c1}%}${_SCOLO}, ${_NCOLO}%{%${#c2}G${c2}%}")
