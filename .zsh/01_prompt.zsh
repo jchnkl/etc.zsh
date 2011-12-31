@@ -78,18 +78,15 @@ function updateWeather() {
 
     # Conditions are not always present
     if [ -n "${_COND}" ]; then
-        local _PCOND
-        for c1 c2 in ${(s:\0:S)${_COND}//(; |, )/'\0'}; do # split at commas and semicolons
-            if [ -n "${c2}" ]; then
-                _PCOND+=("%{%${#c1}G${c1}%}, %{%${#c2}G${c2}%")
-                pelems+=(${_PCOND} "${_NCOLO}%{%${#c1}G${c1}%}${_SCOLO}, ${_NCOLO}%{%${#c2}G${c2}%}")
-            else
-                _PCOND+=("%{%${#c1}G${c1}%}")
-                pelems+=(${_PCOND} "${_NCOLO}%{%${#c1}G${c1}%}${_SCOLO}")
-            fi
+        local _PCOND= _CCOND=
+        for c in ${(s:\0:S)${_COND}//(; |, )/'\0'}; do # split at commas and semicolons
+          _PCOND+=(%{%${#c}G${c}%})
+          _CCOND+=(${_NCOLO}%{%${#c}G${c}%}${_SCOLO})
         done
 
-        _WP+=(${(s:\0:)_PSEP} ${_PCOND})
+        # join with ', '; remove a head comma (, ) if necessary (#)
+        pelems+=(${${(j:, :)_PCOND}/#, /} ${${(j:, :)_CCOND}/#, /})
+        _WP+=(${(s:\0:)_PSEP} ${${(j:, :)_PCOND}/#, /})
     fi
 
     # Sky Conditions is not always present
