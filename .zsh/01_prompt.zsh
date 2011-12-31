@@ -8,7 +8,7 @@ local _ECOLO="%3F"
 local _EMPH="%251F"
 
 local _WS=" ";
-local _SEP="|";
+local _SEP="${(#)${:-166}}";
 local _COMMA=",";
 local _LBRKT="[";
 local _RBRKT="]";
