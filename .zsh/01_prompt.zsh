@@ -109,41 +109,146 @@ function updateWeather() {
 
 
 function updateBattery() {
+
+    local days= hours= mins=
+    function splitTime() {
+        days= hours= mins=
+        local _TIME=$1
+        local _D=$(( (${_TIME} / 60) / 24 ))
+        local _H=$(( (${_TIME} - (${_D} * 24 * 60)) / 60 ))
+        local _M=$(( ${_TIME} % 60 ))
+
+        while [[ ${_D} -gt 0 ]]; do
+            days=($((${_D} % 10)) $days);
+            _D=$((${_D} / 10));
+        done
+
+        while [[ ${_H} -gt 0 ]]; do
+            hours=($((${_H} % 10)) $hours);
+            _H=$((${_H} / 10));
+        done
+
+        while [[ ${_M} -gt 0 ]]; do
+            mins=($((${_M} % 10)) $mins);
+            _M=$((${_M} / 10));
+        done
+    }
+
+
+    function buildBar() {
+        local _PHORS="$(printf "% 2i" ${(j::)hours:-0})"
+        local _PMINS="$(printf "%02i" ${(j::)mins})"
+        local _PTIME=" ${_PHORS}:${_PMINS} "
+        local _CTIME
+
+        local _FG2="%0F"
+        if [ ${REMP} -gt 84 ]; then
+            local C=2
+            _CTIME="%${C}K${_FG2}${_PTIME}%f%k"
+
+        elif [ ${REMP} -gt 52 ]; then
+            local C=2
+            _CTIME=" %${C}K${_FG2}${_PHORS}:${_PMINS}%f %k"
+
+        elif [ ${REMP} -gt 32 ]; then
+            local C=2
+            _CTIME="%${C}F${_PHORS[1]}${_FG2}%${C}K${_PHORS[2]:-0}:${_PMINS}%f"
+            _CTIME=" ${_CTIME} %k"
+
+        elif [ ${REMP} -gt 20 ]; then
+            local C=2
+            _CTIME="%${C}F${_PHORS}${_FG2}%${C}K:${_PMINS}%f"
+            _CTIME=" ${_CTIME} %k"
+
+        elif [ ${REMP} -gt 12 ]; then
+            local C=3
+            _CTIME="%${C}F${_PHORS}:${_FG2}%${C}K${_PMINS}%f"
+            _CTIME=" ${_CTIME} %k"
+
+        elif [ ${REMP} -gt 8 ]; then
+            local C=9
+            _CTIME="%${C}F${_PHORS}:${_PMINS[1]:-0}${_FG2}%${C}K${_PMINS[2]:-0}%f"
+            _CTIME=" ${_CTIME} %k"
+
+        elif [ ${REMP} -gt 4 ]; then
+            local C=1
+            _CTIME="%${C}F${_PHORS}:${_PMINS}%f"
+            _CTIME=" ${_CTIME}%${C}K %k"
+
+        else
+            local C=1
+            _CTIME="%${C}F${_PHORS}:${_PMINS}%f"
+            _CTIME=" ${_CTIME} "
+
+        fi
+
+        reply=(${_PTIME} ${_CTIME})
+    }
+
+
     local REMPFILE="/sys/module/tp_smapi/drivers/platform:smapi/smapi/BAT0/remaining_percent"
+    local RUNFILE="/sys/module/tp_smapi/drivers/platform:smapi/smapi/BAT0/remaining_running_time"
+    local CHARGEFILE="/sys/module/tp_smapi/drivers/platform:smapi/smapi/BAT0/remaining_charging_time"
     local STATEFILE="/sys/module/tp_smapi/drivers/platform:smapi/smapi/BAT0/state"
 
-    if [ ! -s ${REMPFILE} ]; then
+    if [ ! -s ${REMPFILE} -o ! -s ${RUNFILE} -o ! -s ${CHARGEFILE} -o ! -s ${STATEFILE} ]; then
         return
     fi
 
     local REMP=$(< ${REMPFILE})
+    local RUNTIME=$(< ${RUNFILE})
+    local CHARGETIME=$(< ${CHARGEFILE})
 
-    local STATE=${(g::)${:-"\u2301"}}
-    local BLOCK44=${(g::)${:-"\u2588"}}
-    local BLOCK34=${(g::)${:-"\u259F"}}
-    local BLOCK24=${(g::)${:-"\u2584"}}
-    local BLOCK14=${(g::)${:-"\u2597"}}
-    local BLOCK04=" "
+    #local STATE=${(g::)${:-"\u2301"}}
+    #local BLOCK44=${(g::)${:-"\u2588"}}
+    #local BLOCK34=${(g::)${:-"\u259F"}}
+    #local BLOCK24=${(g::)${:-"\u2584"}}
+    #local BLOCK14=${(g::)${:-"\u2597"}}
+    #local BLOCK04=" "
 
-    local _CBATTERY=
-    _PBATTERY=
-    if [ -s ${STATEFILE} ]; then
-        case "$(< ${STATEFILE})" in
-            idle)
-                _PBATTERY="i"
-                _CBATTERY="${_NCOLO}${STATE}%f"
-                ;;
-            charging)
-                _PBATTERY="c"
-                _CBATTERY="%2F${STATE}%f"
-                ;;
-            discharging)
-                _PBATTERY="d"
-                _CBATTERY="%1F${STATE}%f"
-                ;;
-        esac
+
+    local _STATEI=
+    case "$(< ${STATEFILE})" in
+        idle)
+            _STATEI="i"; #_CBATTERY="${_NCOLO}${_PBATTERY}%f"
+            ;;
+        charging)
+            _STATEI="c"; #_CBATTERY="%2F${_PBATTERY}%f"
+            ;;
+        discharging)
+            _STATEI="d"; #_CBATTERY="%1F${_PBATTERY}}%f"
+            ;;
+    esac
+
+
+    if [[ ${RUNTIME} =~ "^[[:digit:]+]" ]]; then
+        splitTime ${RUNTIME}
+    elif [[ ${CHARGETIME} =~ "^[[:digit:]+]" ]]; then
+        splitTime ${CHARGETIME}
+    else
+        days=(" " " "); hours=(" " " "); mins=(" " " ")
     fi
+    buildBar
 
+
+    function test() {
+        for c in 3 7 11 19 31 51 83 100; do
+            for t in 5 11 121; do
+                REMP=$c
+                splitTime $t
+                #echo "remp: $REMP; days: $days; hours: $hours; mins: $mins"
+                buildBar
+                echo "x${(%)reply[2]}x        x${(%)reply[1]}x remp: $REMP"
+            done
+        done
+    }
+
+
+    _PBATTERY="${reply[1]}${_STATEI}"
+    pelems+=(${_PBATTERY} "${reply[2]}${_STATEI}")
+
+
+    if false; then
     # 5 * 4 * 5% = 100%
     # ugly, but i'm too lazy to think of something
     # on the other hand it should be fast instead building strings.. :)
@@ -233,8 +338,9 @@ function updateBattery() {
         _CBATTERY+="%1F${BLOCK04}${BLOCK04}${BLOCK04}${BLOCK04}${BLOCK04}%f"
     fi
 
-
     pelems+=(${_PBATTERY} ${_CBATTERY})
+
+    fi
 }
 
 
@@ -300,11 +406,11 @@ autoload zsh/terminfo;
 if [[ "$terminfo[colors]" -ge 8 ]]; then _FANCY=true; else _FANCY=false; fi
 
 
-if [ -z "${_SHRTWEATHER}" -o -z "${_LONGWEATHER}" -o -z "${_PBATTERY}" ]; then
-    updateWeather
-    updateBattery
-    updatePrompt
-fi
+#if [ -z "${_SHRTWEATHER}" -o -z "${_LONGWEATHER}" -o -z "${_PBATTERY}" ]; then
+    #updateWeather
+    #updateBattery
+    #updatePrompt
+#fi
 
 
 local _BOTPROMPT=
