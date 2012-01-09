@@ -139,9 +139,9 @@ function updateBattery() {
         local _PHORS="$(printf "% 2i" ${(j::)hours:-0})"
         local _PMINS="$(printf "%02i" ${(j::)mins})"
         local _PTIME=" ${_PHORS}:${_PMINS} "
-        local _CTIME
-
+        local _CTIME=
         local _FG2="%0F"
+
         if [ ${REMP} -gt 84 ]; then
             local C=2
             _CTIME="%${C}K${_FG2}${_PTIME}%f%k"
