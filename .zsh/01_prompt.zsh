@@ -199,13 +199,6 @@ function updateBattery() {
     local RUNTIME=$(< ${RUNFILE})
     local CHARGETIME=$(< ${CHARGEFILE})
 
-    #local STATE=${(g::)${:-"\u2301"}}
-    #local BLOCK44=${(g::)${:-"\u2588"}}
-    #local BLOCK34=${(g::)${:-"\u259F"}}
-    #local BLOCK24=${(g::)${:-"\u2584"}}
-    #local BLOCK14=${(g::)${:-"\u2597"}}
-    #local BLOCK04=" "
-
 
     local _STATEI=
     case "$(< ${STATEFILE})" in
@@ -247,100 +240,6 @@ function updateBattery() {
     _PBATTERY="${reply[1]}${_STATEI}"
     pelems+=(${_PBATTERY} "${reply[2]}${_STATEI}")
 
-
-    if false; then
-    # 5 * 4 * 5% = 100%
-    # ugly, but i'm too lazy to think of something
-    # on the other hand it should be fast instead building strings.. :)
-    # p.s. hooray for vim macros
-    if [ ${REMP} -gt 95 ]; then
-        _PBATTERY+="${BLOCK44}${BLOCK44}${BLOCK44}${BLOCK44}${BLOCK44}"
-        _CBATTERY+="%2F${BLOCK44}${BLOCK44}${BLOCK44}${BLOCK44}${BLOCK44}%f"
-
-    elif [ ${REMP} -gt 90 ]; then
-        _PBATTERY+="${BLOCK34}${BLOCK44}${BLOCK44}${BLOCK44}${BLOCK44}"
-        _CBATTERY+="%2F${BLOCK34}${BLOCK44}${BLOCK44}${BLOCK44}${BLOCK44}%f"
-
-    elif [ ${REMP} -gt 85 ]; then
-        _PBATTERY+="${BLOCK24}${BLOCK44}${BLOCK44}${BLOCK44}${BLOCK44}"
-        _CBATTERY+="%2F${BLOCK24}${BLOCK44}${BLOCK44}${BLOCK44}${BLOCK44}%f"
-
-    elif [ ${REMP} -gt 80 ]; then
-        _PBATTERY+="${BLOCK14}${BLOCK44}${BLOCK44}${BLOCK44}${BLOCK44}"
-        _CBATTERY+="%2F${BLOCK14}${BLOCK44}${BLOCK44}${BLOCK44}${BLOCK44}%f"
-
-    elif [ ${REMP} -gt 75 ]; then
-        _PBATTERY+="${BLOCK04}${BLOCK44}${BLOCK44}${BLOCK44}${BLOCK44}"
-        _CBATTERY+="%2F${BLOCK04}${BLOCK44}${BLOCK44}${BLOCK44}${BLOCK44}%f"
-
-    elif [ ${REMP} -gt 70 ]; then
-        _PBATTERY+="${BLOCK04}${BLOCK34}${BLOCK44}${BLOCK44}${BLOCK44}"
-        _CBATTERY+="%2F${BLOCK04}${BLOCK34}${BLOCK44}${BLOCK44}${BLOCK44}%f"
-
-    elif [ ${REMP} -gt 65 ]; then
-        _PBATTERY+="${BLOCK04}${BLOCK24}${BLOCK44}${BLOCK44}${BLOCK44}"
-        _CBATTERY+="%2F${BLOCK04}${BLOCK24}${BLOCK44}${BLOCK44}${BLOCK44}%f"
-
-    elif [ ${REMP} -gt 60 ]; then
-        _PBATTERY+="${BLOCK04}${BLOCK14}${BLOCK44}${BLOCK44}${BLOCK44}"
-        _CBATTERY+="%2F${BLOCK04}${BLOCK14}${BLOCK44}${BLOCK44}${BLOCK44}%f"
-
-    elif [ ${REMP} -gt 55 ]; then
-        _PBATTERY+="${BLOCK04}${BLOCK04}${BLOCK44}${BLOCK44}${BLOCK44}"
-        _CBATTERY+="%2F${BLOCK04}${BLOCK04}${BLOCK44}${BLOCK44}${BLOCK44}%f"
-
-    elif [ ${REMP} -gt 50 ]; then
-        _PBATTERY+="${BLOCK04}${BLOCK04}${BLOCK34}${BLOCK44}${BLOCK44}"
-        _CBATTERY+="%2F${BLOCK04}${BLOCK04}${BLOCK34}${BLOCK44}${BLOCK44}%f"
-
-    elif [ ${REMP} -gt 45 ]; then
-        _PBATTERY+="${BLOCK04}${BLOCK04}${BLOCK24}${BLOCK44}${BLOCK44}"
-        _CBATTERY+="%2F${BLOCK04}${BLOCK04}${BLOCK24}${BLOCK44}${BLOCK44}%f"
-
-    elif [ ${REMP} -gt 40 ]; then
-        _PBATTERY+="${BLOCK04}${BLOCK04}${BLOCK14}${BLOCK44}${BLOCK44}"
-        _CBATTERY+="%2F${BLOCK04}${BLOCK04}${BLOCK14}${BLOCK44}${BLOCK44}%f"
-
-    elif [ ${REMP} -gt 35 ]; then
-        _PBATTERY+="${BLOCK04}${BLOCK04}${BLOCK04}${BLOCK44}${BLOCK44}"
-        _CBATTERY+="%2F${BLOCK04}${BLOCK04}${BLOCK04}${BLOCK44}${BLOCK44}%f"
-
-    elif [ ${REMP} -gt 30 ]; then
-        _PBATTERY+="${BLOCK04}${BLOCK04}${BLOCK04}${BLOCK34}${BLOCK44}"
-        _CBATTERY+="%2F${BLOCK04}${BLOCK04}${BLOCK04}${BLOCK34}${BLOCK44}%f"
-
-    elif [ ${REMP} -gt 25 ]; then
-        _PBATTERY+="${BLOCK04}${BLOCK04}${BLOCK04}${BLOCK24}${BLOCK44}"
-        _CBATTERY+="%2F${BLOCK04}${BLOCK04}${BLOCK04}${BLOCK24}${BLOCK44}%f"
-
-    elif [ ${REMP} -gt 20 ]; then
-        _PBATTERY+="${BLOCK04}${BLOCK04}${BLOCK04}${BLOCK14}${BLOCK44}"
-        _CBATTERY+="%3F${BLOCK04}${BLOCK04}${BLOCK04}${BLOCK14}${BLOCK44}%f"
-
-    elif [ ${REMP} -gt 15 ]; then
-        _PBATTERY+="${BLOCK04}${BLOCK04}${BLOCK04}${BLOCK04}${BLOCK44}"
-        _CBATTERY+="%3F${BLOCK04}${BLOCK04}${BLOCK04}${BLOCK04}${BLOCK44}%f"
-
-    elif [ ${REMP} -gt 10 ]; then
-        _PBATTERY+="${BLOCK04}${BLOCK04}${BLOCK04}${BLOCK04}${BLOCK34}"
-        _CBATTERY+="%9F${BLOCK04}${BLOCK04}${BLOCK04}${BLOCK04}${BLOCK34}%f"
-
-    elif [ ${REMP} -gt 5 ]; then
-        _PBATTERY+="${BLOCK04}${BLOCK04}${BLOCK04}${BLOCK04}${BLOCK24}"
-        _CBATTERY+="%9F${BLOCK04}${BLOCK04}${BLOCK04}${BLOCK04}${BLOCK24}%f"
-
-    elif [ ${REMP} -gt 0 ]; then
-        _PBATTERY+="${BLOCK04}${BLOCK04}${BLOCK04}${BLOCK04}${BLOCK14}"
-        _CBATTERY+="%1F${BLOCK04}${BLOCK04}${BLOCK04}${BLOCK04}${BLOCK14}%f"
-
-    else
-        _PBATTERY+="${BLOCK04}${BLOCK04}${BLOCK04}${BLOCK04}${BLOCK04}"
-        _CBATTERY+="%1F${BLOCK04}${BLOCK04}${BLOCK04}${BLOCK04}${BLOCK04}%f"
-    fi
-
-    pelems+=(${_PBATTERY} ${_CBATTERY})
-
-    fi
 }
 
 
