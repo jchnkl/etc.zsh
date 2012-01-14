@@ -26,14 +26,14 @@ function disOwnProcess() {
 
 precmd_functions+=(disOwnProcess)
 
-# $1 = name of cmd; $2 = now in sec since epoc
+# $1 = name of cmd; $2 = now in sec since epoch
 function isXWindow() {
     CMD=$( echo ${1} | sed -e 's/ \{1,\}/ /g' | cut -d ' ' -f 1 )
     NOW=${2}
 
     for pat in $alwaysBackgroundPattern; do
         if [[ ${CMD} =~ $pat ]]; then
-            sendToBackground ${CMD}
+            sendToBackground "now" ${CMD} ${NOW}
             return 0;
         fi
     done
@@ -47,15 +47,17 @@ function isXWindow() {
     echo $(ldd ${cmdbin} 2>/dev/null) | grep X11 2>&1 >/dev/null
     # exit 0 => match; 1 => nomatch
     if [ $? -eq 0 ]; then
-        sendToBackground ${CMD}
+        sendToBackground "try" ${CMD} ${NOW}
         return 0;
     fi
 
     return 0;
 }
 
+# $1 = send to bg immediately; $2 = name of cmd; $3 = now in sec since epoch
 function sendToBackground() {
-    CMD=${1}
+    TRY=${1}; CMD=${2}; NOW=${3}
+
     # -le 2 -> wait 2 seconds
     t=0; while [ $t -le 30 ]; do
         t=$(($t+1))
@@ -69,9 +71,13 @@ function sendToBackground() {
         start=$(echo -e "${psstring}" | tail -1 | grep "${CMD}" | cut -d ' ' -f 3-)
 
         if [[ -n "${start}" && $(date -d "${start}" +%s) -ge ${NOW} ]]; then
-            # background only processes with a window
-            xdotool search --onlyvisible --limit 1 --pid ${pid} --name ".*${comm}.*" 1>/dev/null 2>/dev/null
-            if [[ $? -eq 0 && ${comm} =~ "${CMD}.*" ]]; then
+            if [ "${TRY}" = "try" ]; then
+                # background only processes with a window
+                xdotool search --onlyvisible --limit 1 \
+                    --pid ${pid} --name ".*${comm}.*" 1>/dev/null 2>/dev/null
+            fi
+
+            if [[ ("${TRY}" == "now" || $? -eq 0) && ${comm} =~ "${CMD}.*" ]]; then
                 print true # as coproc print true to the reading (read -p) process
                 kill -SIGTSTP ${pid}
                 return 0;
