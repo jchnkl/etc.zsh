@@ -86,8 +86,8 @@ function sendToBackground() {
             fi
 
             if [[ ("${TRY}" == "now" || $? -eq 0) && ${comm} =~ "${CMD}.*" ]]; then
-                print true # as coproc print true to the reading (read -p) process
                 kill -SIGTSTP ${pid}
+                print true # as coproc print true to the reading (read -p) process
                 return 0;
             else
                 sleep 0.1s
