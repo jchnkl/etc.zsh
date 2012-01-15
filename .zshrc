@@ -49,7 +49,8 @@ setopt kshglob autocd autopushd cdablevars chasedots chaselinks histnostore
 setopt histignorealldups histsavenodups histreduceblanks histverify
 setopt incappendhistory nohup transientrprompt
 setopt listrowsfirst # menu_complete
-setopt auto_continue
+setopt autocontinue
+setopt interactivecomments
 unsetopt beep
 
 #PROMPT='[%h %~%(!.#.$)] '
