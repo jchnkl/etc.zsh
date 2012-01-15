@@ -4,6 +4,8 @@ setopt nocheckjobs # recommended for bg'ing a proc
 
 local alwaysBackgroundPattern
 alwaysBackgroundPattern=('firefox.*' 'thunderbird.*' 'urxvt.*')
+local excludeCommandPattern
+excludeCommandPattern=('vim.*')
 
 function checkForXProc() {
     coproc isXWindow "$1" $(date +%s)
@@ -30,6 +32,12 @@ precmd_functions+=(disOwnProcess)
 function isXWindow() {
     CMD=$( echo ${1} | sed -e 's/ \{1,\}/ /g' | cut -d ' ' -f 1 )
     NOW=${2}
+
+    for pat in $excludeCommandPattern; do
+        if [[ ${CMD} =~ $pat ]]; then
+            return 0;
+        fi
+    done
 
     for pat in $alwaysBackgroundPattern; do
         if [[ ${CMD} =~ $pat ]]; then
