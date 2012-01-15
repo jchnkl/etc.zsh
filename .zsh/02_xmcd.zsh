@@ -8,8 +8,10 @@ local excludeCommandPattern
 excludeCommandPattern=('vim.*')
 
 function checkForXProc() {
-    coproc isXWindow "$1" $(date +%s)
-    disown %isXWindow
+    setopt nomonitor
+    coproc isXWindow "$1" $(date +%s) 2>/dev/null 1>/dev/null
+    disown %isXWindow 2>/dev/null 1>/dev/null
+    setopt monitor
     return 0
 }
 
