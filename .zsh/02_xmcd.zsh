@@ -66,7 +66,7 @@ function isXWindow() {
 
 # $1 = send to bg immediately; $2 = name of cmd; $3 = now in sec since epoch
 function sendToBackground() {
-    TRY=${1}; CMD=${2}; NOW=${3}
+    TRY=${1}; CMD=${(r:15:)2}; NOW=${3}
 
     # -le 2 -> wait 2 seconds
     t=0; while [ $t -le 30 ]; do
@@ -81,6 +81,7 @@ function sendToBackground() {
         start=$(echo -e "${psstring}" | tail -1 | grep "${CMD}" | cut -d ' ' -f 3-)
 
         if [[ -n "${start}" && $(date -d "${start}" +%s) -ge ${NOW} ]]; then
+
             if [ "${TRY}" = "try" ]; then
                 # background only processes with a window
                 xdotool search --onlyvisible --limit 1 \
