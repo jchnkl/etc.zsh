@@ -64,10 +64,13 @@ function updateWeather() {
     fi
 
     local _PTEMP="%{%${#_TEMP}G${_TEMP}%}°C"
-    local _PWIND="%{%${#_WIND}G${_WIND}%}kmh"
-
     pelems+=(${_PTEMP} "%{$fg[${TCOLOR}]%}%{%${#_TEMP}G${_TEMP}%}%{$fg[default]%}${_NCOLO}°C%f")
-    pelems+=(${_PWIND} "${_NCOLO}%{%${#_WIND}G${_WIND}%}kmh%f")
+
+    local _PWIND=
+    if [ -n "${_WIND}" ]; then
+        _PWIND="%{%${#_WIND}G${_WIND}%}kmh"
+        pelems+=(${_PWIND} "${_NCOLO}%{%${#_WIND}G${_WIND}%}kmh%f")
+    fi
 
     # global variable
     _SHRTWEATHER=${_PTEMP}
