@@ -22,7 +22,7 @@ function disOwnProcess() {
 
     if [ "${disOwnProc}" = "true" ]; then
         #disown %%
-        bg %% # with bg proc stays in job table; with disown it is removed
+        bg %% 2>/dev/null # with bg proc stays in job table; with disown it is removed
     fi
 
     return 0;
