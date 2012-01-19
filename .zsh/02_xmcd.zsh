@@ -76,9 +76,9 @@ function sendToBackground() {
         psstring="$(ps -t $TTY -o comm,pid,lstart --sort start \
             | sed -r -e '/((-|)zsh|sed|ps|cut|grep|tail|<defunct>)/d; s/ {1,}/ /g')"
 
-        comm=$(echo -e "${psstring}" | tail -1 | grep "${CMD}" | cut -d ' ' -f 1)
-        pid=$(echo -e "${psstring}" | tail -1 | grep "${CMD}" | cut -d ' ' -f 2)
-        start=$(echo -e "${psstring}" | tail -1 | grep "${CMD}" | cut -d ' ' -f 3-)
+        comm=$(echo -e "${psstring}" | grep "${CMD}" | tail -1 | cut -d ' ' -f 1)
+        pid=$(echo -e "${psstring}" grep "${CMD}" | tail -1 | cut -d ' ' -f 2)
+        start=$(echo -e "${psstring}" grep "${CMD}" | tail -1 | cut -d ' ' -f 3-)
 
         if [[ -n "${start}" && $(date -d "${start}" +%s) -ge ${NOW} ]]; then
 
