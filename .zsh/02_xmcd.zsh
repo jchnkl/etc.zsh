@@ -2,6 +2,9 @@ setopt nohup # recommended for bg'ing a proc
 setopt nocheckjobs # recommended for bg'ing a proc
 #setopt auto_continue # recommened for disown'ing a proc
 
+
+return 0;
+
 local alwaysBackgroundPattern
 alwaysBackgroundPattern=('firefox.*' 'thunderbird.*' 'urxvt.*')
 local excludeCommandPattern
