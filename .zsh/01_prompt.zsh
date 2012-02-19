@@ -21,7 +21,7 @@ local _HOST="%2m";
 local _TIME="%D{%H:%M}";
 local _LONGDATE="%D{%A, %d. %B %Y}";
 local _SHRTDATE="%D{%a, %d. %b %y}";
-local _VCS="${vcs_info_msg_0_}";
+# local _VCS="${vcs_info_msg_0_}";
 
 
 # global array
@@ -40,7 +40,7 @@ pelems+=(${_HOST}	"${_ECOLO}${_HOST}%f")
 pelems+=(${_TIME}	"${_EMPH}%D{%H:%M}%f")
 pelems+=(${_LONGDATE}	"${_EMPH}%D{%A}%f, ${_EMPH}%D{%d}%f${_NCOLO}%D{. %B %Y}")
 pelems+=(${_SHRTDATE}	"${_EMPH}%D{%a}%f, ${_EMPH}%D{%d}%f${_NCOLO}%D{. %b %y}")
-pelems+=(${_VCS}	"${vcs_info_msg_0_}")
+# pelems+=(${_VCS}	"${vcs_info_msg_0_}")
 
 
 # do the heavy lifting only every $PERIOD
