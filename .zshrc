@@ -22,7 +22,10 @@ zstyle ':completion:*' select-prompt %SScrolling active: current selection at %p
 zstyle ':completion:*' squeeze-slashes true
 zstyle ':completion:*' substitute 1
 
-#zstyle ':completion:*' insert-unambiguous true
+zstyle ':completion:*' original true
+zstyle ':completion:*' old-matches true
+zstyle ':completion:*' match-original both
+zstyle ':completion:*' insert-unambiguous true
 #zstyle ':completion:*' menu select=1 eval "$(dircolors -b)"
 zstyle ':completion:*' menu select=long eval "$(dircolors -b)"
 zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
@@ -51,6 +54,9 @@ setopt incappendhistory nohup transientrprompt
 setopt listrowsfirst # menu_complete
 setopt autocontinue
 setopt interactivecomments
+setopt listambiguous
+setopt autolist
+setopt noautomenu
 unsetopt beep
 
 #PROMPT='[%h %~%(!.#.$)] '
