@@ -193,7 +193,12 @@ function updateBattery() {
     local RUNFILE="/sys/module/tp_smapi/drivers/platform:smapi/smapi/BAT0/remaining_running_time"
     local CHARGEFILE="/sys/module/tp_smapi/drivers/platform:smapi/smapi/BAT0/remaining_charging_time"
     local STATEFILE="/sys/module/tp_smapi/drivers/platform:smapi/smapi/BAT0/state"
-    local INSTALLED=$(< "/sys/module/tp_smapi/drivers/platform:smapi/smapi/BAT0/installed")
+
+    if [ -r "/sys/module/tp_smapi/drivers/platform:smapi/smapi/BAT0/installed" ]; then
+        local INSTALLED=$(< "/sys/module/tp_smapi/drivers/platform:smapi/smapi/BAT0/installed")
+    else
+        return
+    fi
 
     if [ ! -s ${REMPFILE} -o ! -s ${RUNFILE} -o ! -s ${CHARGEFILE} -o ! -s ${STATEFILE} -o ${INSTALLED} = "0"  ]; then
         return
