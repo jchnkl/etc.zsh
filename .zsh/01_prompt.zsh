@@ -1,4 +1,13 @@
 # global variables: pelems _LONGWEATHER _SHRTWEATHER _SHOMEP _LHOMEP
+#
+# TODO
+# updateWeather: check age of file and (don't) update
+# vcs_info: (g)it, (h)g, (s)vn -> red: unstaged, yellow: uncommited, green: ok
+# g:(collapsed_git_root)/path/within/git
+# if right prompt > (columns - leftprompt), collapse:
+# remove weather, date, etc, then collapse directory
+# if dir too long put it in line above
+#
 
 PERIOD=600
 
