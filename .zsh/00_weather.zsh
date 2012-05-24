@@ -10,9 +10,11 @@ function concatWith() {
 }
 
 function updateWeather() {
-    local mode=$1
+    local mode=$1 _WS=" " _COMMA=","
     local pelems=
     typeset -A pelems
+    pelems+=(${_WS}     "${_WS}")
+    pelems+=(${_COMMA}  "${_SCOLO}${_COMMA}%f")
 
     local WEATHERFILE=${HOME}/.zsh/weather
     if [ ! -s ${WEATHERFILE} ]; then
