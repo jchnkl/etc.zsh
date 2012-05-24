@@ -73,6 +73,10 @@ function updateWeather() {
         _LONGWEATHER+=${e}
         _CLONGWEATHR+=${(v)pelems[${e}]}
     done
-    pelems+=(${_LONGWEATHER} ${_CLONGWEATHR})
+
+    case ${mode} in
+        color)    echo ${_CLONGWEATHR} ;;
+        nocolor)  echo ${_LONGWEATHER} ;;
+    esac
 
 }
