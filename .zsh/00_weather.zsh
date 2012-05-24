@@ -6,7 +6,6 @@ function concatWith() {
     while [ -n "${1}" ]; do
         reply+=(${(s:\0:)_concatWithSep} ${(s:\0:)1}); shift;
     done
-    : echo $reply
 }
 
 function updateWeather() {
