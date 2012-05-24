@@ -10,6 +10,10 @@ function concatWith() {
 }
 
 function updateWeather() {
+    local mode=$1
+    local pelems=
+    typeset -A pelems
+
     local WEATHERFILE=${HOME}/.zsh/weather
     if [ ! -s ${WEATHERFILE} ]; then
         return
@@ -38,7 +42,7 @@ function updateWeather() {
     fi
 
     # global variable
-    _SHRTWEATHER=${_PTEMP}
+    local _SHRTWEATHER=${_PTEMP}
     pelems[${_SHRTWEATHER}]=${pelems[${_PTEMP}]}
 
     local _WP= _PSEP=${_COMMA}'\0'${_WS}
@@ -64,9 +68,7 @@ function updateWeather() {
         _WP+=(${(s:\0:)_PSEP} ${_PSKYC})
     fi
 
-    # global variable
-    _LONGWEATHER=
-    local _CLONGWEATHR
+    local _LONGWEATHER= _CLONGWEATHR=
     for e in ${_WP}; do
         _LONGWEATHER+=${e}
         _CLONGWEATHR+=${(v)pelems[${e}]}
