@@ -5,6 +5,7 @@ local PERIOD=600
 local OLDCOLS=0
 local WEATHEROK=0
 local BATOK=0
+local UPDATEVCS=1
 # 1.618 ^= golden ratio
 local _RPMAX=$(((${COLUMNS}*1000)/1618))
 
@@ -302,8 +303,21 @@ periodicUpdateWeather () {
 
 preexecVCSUpdate () {
 
-    local sblen= trunc=
     if [[ $1 =~ '^git.*' || $2 =~ '^git.*' || $# -eq 0 ]]; then
+
+        UPDATEVCS=1
+
+    fi
+
+}
+
+updateVCSInfo () {
+
+    local sblen= trunc=
+
+    if [ ${UPDATEVCS} -eq 1 ]; then
+
+        UPDATEVCS=0
 
         updateVCSPrompt
         vcs_info
@@ -363,8 +377,8 @@ batteryUpdate
 preexecVCSUpdate
 periodicUpdateWeather
 
-chpwd_functions+=(preexecVCSUpdate updateRPrompt)
-resize_functions+=(preexecVCSUpdate updateRPrompt)
-precmd_functions+=(mkHistPrompt batteryUpdate updatePrompt)
+chpwd_functions+=(preexecVCSUpdate updateVCSInfo updateRPrompt)
+resize_functions+=(preexecVCSUpdate updateVCSInfo updateRPrompt)
+precmd_functions+=(mkHistPrompt batteryUpdate updateVCSInfo updatePrompt)
 preexec_functions+=(preexecVCSUpdate updateRPrompt)
 periodic_functions+=(updateWeather updateRPrompt)
