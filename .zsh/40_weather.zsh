@@ -19,6 +19,7 @@ function updateWeather() {
     if [ ! -s ${WEATHERFILE} ]; then
         return
     fi
+
     local _TEMP="$(grep "Temperature:" ${WEATHERFILE} | cut -d ' ' -f 2)"
     local _WIND="$(grep "Wind:" ${WEATHERFILE} | cut -d ' ' -f 4,8)"
     local _COND="$(grep "Weather:" ${WEATHERFILE} | cut -d ' ' -f 2-)"
