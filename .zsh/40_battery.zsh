@@ -28,51 +28,65 @@ function updateBattery() {
     function buildBar() {
         local _PHORS="$(printf "% 2i" ${(j::)hours:-0})"
         local _PMINS="$(printf "%02i" ${(j::)mins})"
-        local _PTIME=" ${_PHORS}:${_PMINS} "
-        local _CTIME=
+        local _LTIME=" ${_PHORS}:${_PMINS} "
+        local _STIME="${_STATEI}${_PHORS}:${_PMINS}"
+        local _CLTIME= _CSTIME=
         local _FG2="%0F"
 
-        if [ ${REMP} -gt 84 ]; then
+        if [ ${REMP} -gt 94 ]; then
             local C=2
-            _CTIME="%${C}K${_FG2}${_PTIME}%f%k"
+            _CLTIME="%${C}K${_FG2} ${_STIME}%f %k"
+            _CSTIME="%${C}K${_FG2}${_STIME}%f%k"
+
+        elif [ ${REMP} -gt 73 ]; then
+            local C=2
+            _CLTIME=" %${C}K${_FG2}${_STIME}%f %k"
+            _CSTIME="%${C}K${_FG2}${_STIME}%f%k"
 
         elif [ ${REMP} -gt 52 ]; then
             local C=2
-            _CTIME=" %${C}K${_FG2}${_PHORS}:${_PMINS}%f %k"
+            _CLTIME=" ${_CSTATE}%${C}K${_FG2}${_PHORS}:${_PMINS}%f %k"
+            _CSTIME="${_CSTATE}%${C}K${_FG2}${_PHORS}:${_PMINS}%f%k"
 
         elif [ ${REMP} -gt 32 ]; then
             local C=2
             _CTIME="%${C}F${_PHORS[1]}${_FG2}%${C}K${_PHORS[2]:-0}:${_PMINS}%f"
-            _CTIME=" ${_CTIME} %k"
+            _CLTIME=" ${_CSTATE}${_CTIME} %k"
+            _CSTIME="${_CSTATE}${_CTIME}%k"
 
         elif [ ${REMP} -gt 20 ]; then
-            local C=2
+            local C=3
             _CTIME="%${C}F${_PHORS}${_FG2}%${C}K:${_PMINS}%f"
-            _CTIME=" ${_CTIME} %k"
+            _CLTIME=" ${_CSTATE}${_CTIME} %k"
+            _CSTIME="${_CSTATE}${_CTIME}%k"
 
         elif [ ${REMP} -gt 12 ]; then
             local C=3
             _CTIME="%${C}F${_PHORS}:${_FG2}%${C}K${_PMINS}%f"
-            _CTIME=" ${_CTIME} %k"
+            _CLTIME=" ${_CSTATE}${_CTIME} %k"
+            _CSTIME="${_CSTATE}${_CTIME}%k"
 
         elif [ ${REMP} -gt 8 ]; then
             local C=9
             _CTIME="%${C}F${_PHORS}:${_PMINS[1]:-0}${_FG2}%${C}K${_PMINS[2]:-0}%f"
-            _CTIME=" ${_CTIME} %k"
+            _CLTIME=" ${_CSTATE}${_CTIME} %k"
+            _CSTIME="${_CSTATE}${_CTIME}%k"
 
         elif [ ${REMP} -gt 4 ]; then
             local C=1
             _CTIME="%${C}F${_PHORS}:${_PMINS}%f"
-            _CTIME=" ${_CTIME}%${C}K %k"
+            _CLTIME=" ${_CSTATE}${_CTIME}%${C}K %k"
+            _CSTIME="${_CSTATE}${_CTIME}%${C}K%k"
 
         else
             local C=1
             _CTIME="%${C}F${_PHORS}:${_PMINS}%f"
-            _CTIME=" ${_CTIME} "
+            _CLTIME=" ${_CSTATE}${_CTIME} "
+            _CSTIME="${_CSTATE}${_CTIME}"
 
         fi
 
-        reply=(${_PTIME} ${_CTIME})
+        reply=(${_STIME} ${_CSTIME} ${_STIME} ${_CLTIME})
     }
 
 
