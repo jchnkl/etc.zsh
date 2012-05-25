@@ -321,6 +321,11 @@ preexecVCSUpdate () {
             sprompt+=( "pwd" "${vcs_info_msg_0_}${trunc}"      )
             cprompt+=( "pwd" "${vcs_info_msg_1_}%4F${trunc}%f" )
 
+        else
+
+            sprompt+=( "pwd" "${_PWD}"      )
+            cprompt+=( "pwd" "%4F${_PWD}%f" )
+
         fi
 
     fi
