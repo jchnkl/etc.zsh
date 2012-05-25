@@ -134,8 +134,6 @@ function updateBattery() {
     else
         days=(" " " "); hours=(" " " "); mins=(" " " ")
     fi
-    buildBar
-
 
     function test() {
         for c in 3 7 11 19 31 51 83 100; do
