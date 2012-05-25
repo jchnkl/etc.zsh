@@ -77,8 +77,10 @@ function updateWeather() {
     done
 
     case ${mode} in
-        color)    echo ${_CLONGWEATHR} ;;
-        nocolor)  echo ${_LONGWEATHER} ;;
+        scolor)    echo ${pelems[${_SHRTWEATHER}]} ;;
+        snocolor)  echo ${_SHRTWEATHER} ;;
+        lcolor)    echo ${_CLONGWEATHR} ;;
+        lnocolor)  echo ${_LONGWEATHER} ;;
     esac
 
 }
