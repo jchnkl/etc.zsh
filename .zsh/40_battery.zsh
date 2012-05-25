@@ -148,9 +148,17 @@ function updateBattery() {
     }
 
 
-    _PBATTERY="${reply[1]}${_STATEI}"
-    pelems+=(${_PBATTERY} "${reply[2]}${_STATEI}")
+    #_PBATTERY="${reply[1]}${_STATEI}"
+    #pelems+=(${_PBATTERY} "${reply[2]}${_STATEI}")
+
+    buildBar
+
+    local resp=
+    typeset -a resp
+    resp=( "${reply[1]}" "${reply[2]}" \
+           "${reply[3]}" "${reply[4]}" )
+
+    echo ${(pj:\0:)resp}
 
 }
-
 
