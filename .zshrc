@@ -38,7 +38,6 @@ compinit
 # Lines configured by zsh-newuser-install
 
 autoload -Uz colors; colors
-autoload -Uz vcs_info; vcs_info
 
 HISTFILE=~/.histfile
 HISTSIZE=9999
