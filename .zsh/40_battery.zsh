@@ -110,16 +110,19 @@ function updateBattery() {
     local CHARGETIME=$(< ${CHARGEFILE})
 
 
-    local _STATEI=
+    local _STATEI= _CSTATE=
     case "$(< ${STATEFILE})" in
         idle)
-            _STATEI="i"; #_CBATTERY="${_NCOLO}${_PBATTERY}%f"
+            _STATEI=""; #_CBATTERY="${_NCOLO}${_PBATTERY}%f"
+            _CSTATE="";
             ;;
         charging)
-            _STATEI="c"; #_CBATTERY="%2F${_PBATTERY}%f"
+            _STATEI="+"; #_CBATTERY="%2F${_PBATTERY}%f"
+            _CSTATE="%2F+%f";
             ;;
         discharging)
-            _STATEI="d"; #_CBATTERY="%1F${_PBATTERY}}%f"
+            _STATEI="-"; #_CBATTERY="%1F${_PBATTERY}}%f"
+            _CSTATE="%9F-%f";
             ;;
     esac
 
