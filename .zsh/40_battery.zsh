@@ -162,3 +162,62 @@ function updateBattery() {
 
 }
 
+function batPromptTest () {
+    local p=2
+    local _bprompt=
+    typeset -a _bprompt
+    REMP=95
+    _bprompt=( ${(ps:\0:)"$(updateBattery)"} )
+    for i in $p; do
+        echo "${_bprompt[$i]}"
+        print -P -- "x${_bprompt[$i]}x"
+    done
+
+    REMP=80
+    _bprompt=( ${(ps:\0:)"$(updateBattery)"} )
+    for i in $p; do
+        print -P -- "x${_bprompt[$i]}x"
+    done
+
+    REMP=60
+    _bprompt=( ${(ps:\0:)"$(updateBattery)"} )
+    for i in $p; do
+        print -P -- "x${_bprompt[$i]}x"
+    done
+
+    REMP=50
+    _bprompt=( ${(ps:\0:)"$(updateBattery)"} )
+    for i in $p; do
+        print -P -- "x${_bprompt[$i]}x"
+    done
+
+    REMP=30
+    _bprompt=( ${(ps:\0:)"$(updateBattery)"} )
+    for i in $p; do
+        print -P -- "x${_bprompt[$i]}x"
+    done
+
+    REMP=19
+    _bprompt=( ${(ps:\0:)"$(updateBattery)"} )
+    for i in $p; do
+        print -P -- "x${_bprompt[$i]}x"
+    done
+
+    REMP=10
+    _bprompt=( ${(ps:\0:)"$(updateBattery)"} )
+    for i in $p; do
+        print -P -- "x${_bprompt[$i]}x"
+    done
+
+    REMP=7
+    _bprompt=( ${(ps:\0:)"$(updateBattery)"} )
+    for i in $p; do
+        print -P -- "x${_bprompt[$i]}x"
+    done
+
+    REMP=3
+    _bprompt=( ${(ps:\0:)"$(updateBattery)"} )
+    for i in $p; do
+        print -P -- "x${_bprompt[$i]}x"
+    done
+}
