@@ -53,12 +53,6 @@ cprompt+=( "time"   "${_EMPH}%D{%H:%M}%f"                                    )
 cprompt+=( "ldate"  "${_EMPH}%D{%A}%f, ${_EMPH}%D{%d}%f${_NCOLO}%D{. %B %Y}" )
 cprompt+=( "sdate"  "${_EMPH}%D{%a}%f, ${_EMPH}%D{%d}%f${_NCOLO}%D{. %b %y}" )
 
-function mkHistPrompt () {
-    local HEVENTS=${(l.4..0.)$((${HISTCMD} % 10000))}
-    cprompt+=( "!" "${_NCOLO}!${_EMPH}${HEVENTS}%f" )
-    sprompt+=( "!" "!${HEVENTS}" )
-}
-
 function constructPrompt () {
 
     local _elems= _prompt=
@@ -72,6 +66,12 @@ function constructPrompt () {
 
     echo ${_prompt}
 
+}
+
+function mkHistPrompt () {
+    local HEVENTS=${(l.4..0.)$((${HISTCMD} % 10000))}
+    cprompt+=( "!" "${_NCOLO}!${_EMPH}${HEVENTS}%f" )
+    sprompt+=( "!" "!${HEVENTS}" )
 }
 
 function mkNormalPrompt () {
@@ -255,29 +255,6 @@ function mkTruncatedRPrompt () {
 
 }
 
-function rpromptUpdate () {
-
-    local _TRUNLEN=$((${RPMAX}/2 - 1))
-    local _CURPATH=${(%)${:-%~}}
-
-    sprompt+=( "tpwd" "%${_TRUNLEN}>».>%${_CURPATH}%>>%${_TRUNLEN}<.»<%${_CURPATH}%<<" )
-    cprompt+=( "tpwd" "%4F%${_TRUNLEN}>».>%${_CURPATH}%>>%${_TRUNLEN}<.«<%${_CURPATH}%<<%f" )
-
-    RPROMPT=$(mkTruncatedRPrompt ${_pelems} ${RPMAX} )
-
-}
-
-function promptUpdate () {
-
-    PROMPT="
-$(constructPrompt ${_pelems} "[" "!" " " "#" "]" " " )"
-
-}
-
-function rpmaxUpdate () {
-    RPMAX=$(((${COLUMNS}*1000)/1618))
-}
-
 function weatherUpdate () {
     local shrtcolor="$(updateWeather "scolor"      )"
     local shrtnocol="$(updateWeather "snocolor"    )"
@@ -339,6 +316,29 @@ function batteryUpdate () {
     else
         BATOK=0;
     fi
+}
+
+function rpromptUpdate () {
+
+    local _TRUNLEN=$((${RPMAX}/2 - 1))
+    local _CURPATH=${(%)${:-%~}}
+
+    sprompt+=( "tpwd" "%${_TRUNLEN}>».>%${_CURPATH}%>>%${_TRUNLEN}<.»<%${_CURPATH}%<<" )
+    cprompt+=( "tpwd" "%4F%${_TRUNLEN}>».>%${_CURPATH}%>>%${_TRUNLEN}<.«<%${_CURPATH}%<<%f" )
+
+    RPROMPT=$(mkTruncatedRPrompt ${_pelems} ${RPMAX} )
+
+}
+
+function promptUpdate () {
+
+    PROMPT="
+$(constructPrompt ${_pelems} "[" "!" " " "#" "]" " " )"
+
+}
+
+function rpmaxUpdate () {
+    RPMAX=$(((${COLUMNS}*1000)/1618))
 }
 
 autoload zsh/terminfo;
