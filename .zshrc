@@ -40,8 +40,8 @@ compinit
 autoload -Uz colors; colors
 
 HISTFILE=~/.histfile
-HISTSIZE=9999
-SAVEHIST=9999
+HISTSIZE=10000
+SAVEHIST=10000
 bindkey -v
 # End of lines configured by zsh-newuser-install
 
