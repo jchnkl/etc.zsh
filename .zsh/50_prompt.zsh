@@ -277,6 +277,7 @@ function promptUpdate () {
         for f in ${resize_functions}; do
             eval $f
         done
+
     fi
 
     PROMPT="
