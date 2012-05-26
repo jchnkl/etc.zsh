@@ -1,6 +1,3 @@
-# TODO
-# updateWeather: check age of file and (don't) update
-
 local PERIOD=600
 local WEATHEROK=0
 local BATOK=0
