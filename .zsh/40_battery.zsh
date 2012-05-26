@@ -155,6 +155,8 @@ function updateBattery() {
 
     local resp=
     typeset -a resp
+
+    # 1: short nocolor; 2: short color; 3: long nocolor; 4: long color
     resp=( "${reply[1]}" "${reply[2]}" \
            "${reply[3]}" "${reply[4]}" )
 
