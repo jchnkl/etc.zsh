@@ -278,7 +278,7 @@ function rpmaxUpdate () {
     RPMAX=$(((${COLUMNS}*1000)/1618))
 }
 
-weatherUpdate () {
+function weatherUpdate () {
     local shrtcolor="$(updateWeather "scolor"      )"
     local shrtnocol="$(updateWeather "snocolor"    )"
     local longcolor="$(updateWeather "lcolor"      )"
@@ -295,7 +295,7 @@ weatherUpdate () {
     fi
 }
 
-vcsUpdate () {
+function vcsUpdate () {
 
     local sblen= trunc=
 
