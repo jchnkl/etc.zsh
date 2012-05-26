@@ -342,7 +342,7 @@ function batteryUpdate () {
 
 function rpromptUpdate () {
 
-    local _TRUNLEN=$(( ${RPMAX} / 2 - 1 ))
+    local _TRUNLEN=$(( ( ${RPMAX} ) / 2 - 2 ))
     local _CURPATH=${(%)${:-%~}}
 
     #echo "rpromptUpdate: RPMAX: ${RPMAX}" 1>&2
