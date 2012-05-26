@@ -352,5 +352,7 @@ fi
 # initial update
 weatherUpdate
 
-precmd_functions+=(rpmaxUpdate mkHistPrompt batteryUpdate vcsUpdate rpromptUpdate promptUpdate)
-periodic_functions+=(weatherUpdate)
+periodic_functions+=( weatherUpdate )
+precmd_functions+=(   rpmaxUpdate mkHistPrompt batteryUpdate vcsUpdate \
+                      rpromptUpdate promptUpdate \
+                  )
