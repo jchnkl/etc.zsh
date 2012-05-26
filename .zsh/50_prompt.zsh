@@ -4,8 +4,8 @@
 local PERIOD=600
 local WEATHEROK=0
 local BATOK=0
-# 1.618 ^= golden ratio
-local RPMAX=$(((${COLUMNS}*1000)/1618))
+# initialized in precmd with rpmaxUpdate
+local RPMAX=
 
 
 local _NCOLO="%14F" # 66
@@ -52,6 +52,14 @@ cprompt+=( "host"   "${_ECOLO}${_HOST}%f"                                    )
 cprompt+=( "time"   "${_EMPH}%D{%H:%M}%f"                                    )
 cprompt+=( "ldate"  "${_EMPH}%D{%A}%f, ${_EMPH}%D{%d}%f${_NCOLO}%D{. %B %Y}" )
 cprompt+=( "sdate"  "${_EMPH}%D{%a}%f, ${_EMPH}%D{%d}%f${_NCOLO}%D{. %b %y}" )
+
+function rpmaxSize () {
+    echo $(( ( ${COLUMNS} * 1000 / 1618 ) & 0xfffe + 4 ))
+}
+
+function rpmaxUpdate () {
+    RPMAX=$( rpmaxSize )
+}
 
 function constructPrompt () {
 
@@ -353,10 +361,6 @@ function promptUpdate () {
     PROMPT="
 $(constructPrompt ${_pelems} "[" "!" " " "#" "]" " " )"
 
-}
-
-function rpmaxUpdate () {
-    RPMAX=$(((${COLUMNS}*1000)/1618))
 }
 
 autoload zsh/terminfo;
