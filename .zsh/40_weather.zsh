@@ -76,11 +76,13 @@ function updateWeather() {
         _CLONGWEATHR+=${(v)pelems[${e}]}
     done
 
-    case ${mode} in
-        scolor)    echo ${pelems[${_SHRTWEATHER}]} ;;
-        snocolor)  echo ${_SHRTWEATHER} ;;
-        lcolor)    echo ${_CLONGWEATHR} ;;
-        lnocolor)  echo ${_LONGWEATHER} ;;
-    esac
+    # 1: short nocolor; 2: short color; 3: long nocolor; 4: long color
+    local resp=
+    typeset -a resp
+    resp=( "${_SHRTWEATHER}" "${pelems[${_SHRTWEATHER}]}" \
+           "${_LONGWEATHER}" "${_CLONGWEATHR}" \
+         )
+
+    echo ${(pj:\0:)resp}
 
 }

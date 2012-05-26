@@ -256,16 +256,15 @@ function mkTruncatedRPrompt () {
 }
 
 function weatherUpdate () {
-    local shrtcolor="$(updateWeather "scolor"      )"
-    local shrtnocol="$(updateWeather "snocolor"    )"
-    local longcolor="$(updateWeather "lcolor"      )"
-    local longnocol="$(updateWeather "lnocolor"    )"
+    local _weather=
+    typeset -a _weather
+    _weather=( ${(ps:\0:)"$(updateWeather)"} )
 
-    if [ -n "${shrtcolor}" -a -n "${shrtnocol}" -a -n "${longcolor}" -a -n "${longnocol}" ]; then
-        cprompt+=( "sweather" "${shrtcolor}" )
-        sprompt+=( "sweather" "${shrtnocol}" )
-        cprompt+=( "lweather" "${longcolor}" )
-        sprompt+=( "lweather" "${longnocol}" )
+    if [ -n "${_weather[1]}" -a -n "${_weather[2]}" -a -n "${_weather[3]}" -a -n "${_weather[4]}" ]; then
+        sprompt+=( "sweather" "${_weather[1]}" )
+        cprompt+=( "sweather" "${_weather[2]}" )
+        sprompt+=( "lweather" "${_weather[3]}" )
+        cprompt+=( "lweather" "${_weather[4]}" )
         WEATHEROK=1
     else
         WEATHEROK=0
