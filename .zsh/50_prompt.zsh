@@ -299,12 +299,10 @@ function vcsUpdate () {
         #echo "vcsUpdate: #vcs_info_msg_2_: ${#vcs_info_msg_2_}" 1>&2
         #echo "vcsUpdate: rpmax: ${RPMAX}" 1>&2
 
-        if [ ${sblen} -ge 14 ]; then
-            if [ ${sblen} -ge ${#vcs_info_msg_2_} ]; then
-                trunc=":${vcs_info_msg_2_}"
-            else
-                trunc=":%${sbtrunlen}>».>${vcs_info_msg_2_}%>>%${sbtrunlen}<.«<${vcs_info_msg_2_}%<<"
-            fi
+        if [ ${#vcs_info_msg_2_} -le ${sblen} ]; then
+            trunc=":${vcs_info_msg_2_}"
+        elif [ ${sblen} -gt 8 -a ${#vcs_info_msg_2_} -ge ${sblen} ]; then
+            trunc=":%${sbtrunlen}>».>${vcs_info_msg_2_}%>>%${sbtrunlen}<.«<${vcs_info_msg_2_}%<<"
         else
             trunc=""
         fi
