@@ -274,6 +274,10 @@ $(constructPrompt ${_pelems} "[" "!" " " "#" "]" " " )"
 
 }
 
+function rpmaxUpdate () {
+    RPMAX=$(((${COLUMNS}*1000)/1618))
+}
+
 weatherUpdate () {
     local shrtcolor="$(updateWeather "scolor"      )"
     local shrtnocol="$(updateWeather "snocolor"    )"
@@ -350,6 +354,6 @@ weatherUpdate
 
 chpwd_functions+=(vcsUpdate rpromptUpdate)
 resize_functions+=(vcsUpdate rpromptUpdate)
-precmd_functions+=(mkHistPrompt batteryUpdate vcsUpdate rpromptUpdate promptUpdate)
+precmd_functions+=(rpmaxUpdate mkHistPrompt batteryUpdate vcsUpdate rpromptUpdate promptUpdate)
 preexec_functions+=(vcsUpdate rpromptUpdate)
 periodic_functions+=(weatherUpdate)
