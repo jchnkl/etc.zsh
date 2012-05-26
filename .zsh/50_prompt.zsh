@@ -369,7 +369,6 @@ else
 fi
 
 # initial update
-batteryUpdate
 weatherUpdate
 
 chpwd_functions+=(vcsUpdate rpromptUpdate)
