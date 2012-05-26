@@ -257,7 +257,7 @@ function mkTruncatedRPrompt () {
 
 }
 
-function updateRPrompt () {
+function rpromptUpdate () {
 
     local _TRUNLEN=$((${_RPMAX}/2 - 1))
     local _CURPATH=${(%)${:-%~}}
@@ -269,7 +269,7 @@ function updateRPrompt () {
 
 }
 
-function updatePrompt () {
+function promptUpdate () {
 
     if [ ${OLDCOLS} -ne ${COLUMNS} ]; then
         OLDCOLS=${COLUMNS}
@@ -284,7 +284,7 @@ $(constructPrompt ${_pelems} "[" "!" " " "#" "]" " " )"
 
 }
 
-periodicUpdateWeather () {
+weatherUpdate () {
     local shrtcolor="$(updateWeather "scolor"      )"
     local shrtnocol="$(updateWeather "snocolor"    )"
     local longcolor="$(updateWeather "lcolor"      )"
@@ -311,7 +311,7 @@ preexecVCSUpdate () {
 
 }
 
-updateVCSInfo () {
+vcsUpdate () {
 
     local sblen= trunc=
 
@@ -319,7 +319,7 @@ updateVCSInfo () {
 
         UPDATEVCS=0
 
-        updateVCSPrompt
+        vcsUpdate
         vcs_info
 
         if [ -n "${vcs_info_msg_0_}" ]; then
@@ -375,10 +375,10 @@ fi
 # initial update
 batteryUpdate
 preexecVCSUpdate
-periodicUpdateWeather
+weatherUpdate
 
-chpwd_functions+=(preexecVCSUpdate updateVCSInfo updateRPrompt)
-resize_functions+=(preexecVCSUpdate updateVCSInfo updateRPrompt)
-precmd_functions+=(mkHistPrompt batteryUpdate updateVCSInfo updatePrompt)
-preexec_functions+=(preexecVCSUpdate updateRPrompt)
-periodic_functions+=(updateWeather updateRPrompt)
+chpwd_functions+=(preexecVCSUpdate vcsUpdate rpromptUpdate)
+resize_functions+=(preexecVCSUpdate vcsUpdate rpromptUpdate)
+precmd_functions+=(mkHistPrompt batteryUpdate vcsUpdate rpromptUpdate promptUpdate)
+preexec_functions+=(preexecVCSUpdate rpromptUpdate)
+periodic_functions+=(weatherUpdate rpromptUpdate)
