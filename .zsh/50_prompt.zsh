@@ -5,7 +5,7 @@ local PERIOD=600
 local WEATHEROK=0
 local BATOK=0
 # 1.618 ^= golden ratio
-local _RPMAX=$(((${COLUMNS}*1000)/1618))
+local RPMAX=$(((${COLUMNS}*1000)/1618))
 
 
 local _NCOLO="%14F" # 66
@@ -246,7 +246,7 @@ function mkTruncatedRPrompt () {
 
     _tmp=$(tmpprompt ${_c})
 
-    while [ ${#${(%)_tmp}} -gt ${_RPMAX} ]; do
+    while [ ${#${(%)_tmp}} -gt ${RPMAX} ]; do
         _c=$((${_c} + 1))
         _tmp=$(tmpprompt ${_c})
     done
@@ -257,13 +257,13 @@ function mkTruncatedRPrompt () {
 
 function rpromptUpdate () {
 
-    local _TRUNLEN=$((${_RPMAX}/2 - 1))
+    local _TRUNLEN=$((${RPMAX}/2 - 1))
     local _CURPATH=${(%)${:-%~}}
 
     sprompt+=( "tpwd" "%${_TRUNLEN}>».>%${_CURPATH}%>>%${_TRUNLEN}<.»<%${_CURPATH}%<<" )
     cprompt+=( "tpwd" "%4F%${_TRUNLEN}>».>%${_CURPATH}%>>%${_TRUNLEN}<.«<%${_CURPATH}%<<%f" )
 
-    RPROMPT=$(mkTruncatedRPrompt ${_pelems} ${_RPMAX} )
+    RPROMPT=$(mkTruncatedRPrompt ${_pelems} ${RPMAX} )
 
 }
 
@@ -299,7 +299,7 @@ vcsUpdate () {
 
     if [ -n "${vcs_info_msg_0_}" ]; then
 
-        sblen=$(((${_RPMAX}-${#vcs_info_msg_3_})/2 - 1))
+        sblen=$(((${RPMAX}-${#vcs_info_msg_3_})/2 - 1))
 
         if [ ${#vcs_info_msg_2_} -ge ${sblen} ]; then
             trunc="%${sblen}>».>${vcs_info_msg_2_}%>>%${sblen}<.«<${vcs_info_msg_2_}%<<"
