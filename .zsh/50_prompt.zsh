@@ -352,8 +352,5 @@ fi
 # initial update
 weatherUpdate
 
-chpwd_functions+=(vcsUpdate rpromptUpdate)
-resize_functions+=(vcsUpdate rpromptUpdate)
 precmd_functions+=(rpmaxUpdate mkHistPrompt batteryUpdate vcsUpdate rpromptUpdate promptUpdate)
-preexec_functions+=(vcsUpdate rpromptUpdate)
 periodic_functions+=(weatherUpdate)
