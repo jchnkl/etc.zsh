@@ -11,15 +11,15 @@ zstyle ':vcs_info:*+*:*' debug false
 
 +vi-updateVCSPrompt () {
 
-    local                 _cgit_prompt="%2F%c%u%b%f%59F:%4F%r.%1>>%s%>>%59F:"
-    local           _cgit_prompt_ahead="%2F%c%u%b%f%59F:%4F%r.%9F%1>>%s%>>%59F:"
-    local       _cgit_prompt_untracked="%2F%c%u%b%f%59F:%9F%r%4F.%1>>%s%>>%59F:"
-    local _cgit_prompt_ahead_untracked="%2F%c%u%b%f%59F:%9F%r%4F.%9F%1>>%s%>>%59F:"
+    local                 _cgit_prompt="%2F%c%u%b%f%59F:%4F%r.%1>>%s%>>%59F"
+    local           _cgit_prompt_ahead="%2F%c%u%b%f%59F:%4F%r.%9F%1>>%s%>>%59F"
+    local       _cgit_prompt_untracked="%2F%c%u%b%f%59F:%9F%r%4F.%1>>%s%>>%59F"
+    local _cgit_prompt_ahead_untracked="%2F%c%u%b%f%59F:%9F%r%4F.%9F%1>>%s%>>%59F"
 
-    local                 _sgit_prompt="%b:%r.%1>>%s%>>:"
-    local           _sgit_prompt_ahead="%b:%r.%1>>%s%>>!:"
-    local       _sgit_prompt_untracked="%b:%r?.%1>>%s%>>:"
-    local _sgit_prompt_ahead_untracked="%b:%r?.%1>>%s%>>!:"
+    local                 _sgit_prompt="%b:%r.%1>>%s%>>"
+    local           _sgit_prompt_ahead="%b:%r.%1>>%s%>>!"
+    local       _sgit_prompt_untracked="%b:%r?.%1>>%s%>>"
+    local _sgit_prompt_ahead_untracked="%b:%r?.%1>>%s%>>!"
 
     local _git_status="$(git status --short --branch 2>/dev/null)"
 
