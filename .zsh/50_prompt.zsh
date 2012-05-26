@@ -290,7 +290,8 @@ function vcsUpdate () {
 
     if [ -n "${vcs_info_msg_0_}" ]; then
 
-        sblen=$(((${RPMAX}-${#vcs_info_msg_3_})/2 - 1))
+        sblen=$((${RPMAX} - ${#vcs_info_msg_3_} - 2))
+        sbtrunlen=$((${sblen}/2 - 1))
 
         #echo "vcsUpdate: _sblen: ${sblen}" 1>&2
         #echo "vcsUpdate: _sbtrunlen: ${sbtrunlen}" 1>&2
@@ -298,10 +299,14 @@ function vcsUpdate () {
         #echo "vcsUpdate: #vcs_info_msg_2_: ${#vcs_info_msg_2_}" 1>&2
         #echo "vcsUpdate: rpmax: ${RPMAX}" 1>&2
 
-        if [ ${#vcs_info_msg_2_} -ge $((${sblen} * 2)) ]; then
-            trunc=":%${sblen}>».>${vcs_info_msg_2_}%>>%${sblen}<.«<${vcs_info_msg_2_}%<<"
+        if [ ${sblen} -ge 14 ]; then
+            if [ ${sblen} -ge ${#vcs_info_msg_2_} ]; then
+                trunc=":${vcs_info_msg_2_}"
+            else
+                trunc=":%${sbtrunlen}>».>${vcs_info_msg_2_}%>>%${sbtrunlen}<.«<${vcs_info_msg_2_}%<<"
+            fi
         else
-            trunc=":${vcs_info_msg_2_}"
+            trunc=""
         fi
 
         sprompt+=( "pwd" "${vcs_info_msg_0_}${trunc}"      )
