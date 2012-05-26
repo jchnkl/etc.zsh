@@ -302,17 +302,6 @@ weatherUpdate () {
     fi
 }
 
-preexecVCSUpdate () {
-
-    if [[ $1 =~ '^git.*' || $2 =~ '^git.*' || $# -eq 0 ]]; then
-
-        vcsUpdate
-        rpromptUpdate
-
-    fi
-
-}
-
 vcsUpdate () {
 
     local sblen= trunc=
