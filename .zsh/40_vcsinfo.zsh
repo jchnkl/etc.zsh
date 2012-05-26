@@ -6,7 +6,10 @@ zstyle ':vcs_info:*' stagedstr "%3F"
 zstyle ':vcs_info:*' unstagedstr "%9F"
 zstyle ':vcs_info:*' check-for-changes true
 
-updateVCSPrompt () {
+zstyle ':vcs_info:git+pre-get-data:*:*' hooks updateVCSPrompt
+zstyle ':vcs_info:*+*:*' debug false
+
++vi-updateVCSPrompt () {
 
     local                 _cgit_prompt="%2F%c%u%b%f%59F:%4F%r.%1>>%s%>>%59F:"
     local           _cgit_prompt_ahead="%2F%c%u%b%f%59F:%4F%r.%9F%1>>%s%>>%59F:"
