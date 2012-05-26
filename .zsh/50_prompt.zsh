@@ -5,8 +5,6 @@ local PERIOD=600
 local OLDCOLS=0
 local WEATHEROK=0
 local BATOK=0
-local UPDATEVCS=1
-local UPDATERPROMPT=1
 # 1.618 ^= golden ratio
 local _RPMAX=$(((${COLUMNS}*1000)/1618))
 
@@ -260,18 +258,13 @@ function mkTruncatedRPrompt () {
 
 function rpromptUpdate () {
 
-    if [ ${UPDATERPROMPT} -eq 1 ]; then
-        UPDATERPROMPT=0
+    local _TRUNLEN=$((${_RPMAX}/2 - 1))
+    local _CURPATH=${(%)${:-%~}}
 
-        local _TRUNLEN=$((${_RPMAX}/2 - 1))
-        local _CURPATH=${(%)${:-%~}}
+    sprompt+=( "tpwd" "%${_TRUNLEN}>».>%${_CURPATH}%>>%${_TRUNLEN}<.»<%${_CURPATH}%<<" )
+    cprompt+=( "tpwd" "%4F%${_TRUNLEN}>».>%${_CURPATH}%>>%${_TRUNLEN}<.«<%${_CURPATH}%<<%f" )
 
-        sprompt+=( "tpwd" "%${_TRUNLEN}>».>%${_CURPATH}%>>%${_TRUNLEN}<.»<%${_CURPATH}%<<" )
-        cprompt+=( "tpwd" "%4F%${_TRUNLEN}>».>%${_CURPATH}%>>%${_TRUNLEN}<.«<%${_CURPATH}%<<%f" )
-
-        RPROMPT=$(mkTruncatedRPrompt ${_pelems} ${_RPMAX} )
-
-    fi
+    RPROMPT=$(mkTruncatedRPrompt ${_pelems} ${_RPMAX} )
 
 }
 
@@ -280,8 +273,6 @@ function promptUpdate () {
     if [ ${OLDCOLS} -ne ${COLUMNS} ]; then
         OLDCOLS=${COLUMNS}
         _RPMAX=$(((${COLUMNS}*1000)/1618))
-
-        UPDATERPROMPT=1
 
         for f in ${resize_functions}; do
             eval $f
@@ -314,8 +305,8 @@ preexecVCSUpdate () {
 
     if [[ $1 =~ '^git.*' || $2 =~ '^git.*' || $# -eq 0 ]]; then
 
-        UPDATEVCS=1
-        UPDATERPROMPT=1
+        vcsUpdate
+        rpromptUpdate
 
     fi
 
@@ -325,32 +316,26 @@ vcsUpdate () {
 
     local sblen= trunc=
 
-    if [ ${UPDATEVCS} -eq 1 ]; then
+    #updateVCSPrompt
+    vcs_info
 
-        UPDATEVCS=0
+    if [ -n "${vcs_info_msg_0_}" ]; then
 
-        vcsUpdate
-        vcs_info
+        sblen=$(((${_RPMAX}-${#vcs_info_msg_3_})/2 - 1))
 
-        if [ -n "${vcs_info_msg_0_}" ]; then
-
-            sblen=$(((${_RPMAX}-${#vcs_info_msg_3_})/2 - 1))
-
-            if [ ${#vcs_info_msg_2_} -ge ${sblen} ]; then
-                trunc="%${sblen}>».>${vcs_info_msg_2_}%>>%${sblen}<.«<${vcs_info_msg_2_}%<<"
-            else
-                trunc=${vcs_info_msg_2_}
-            fi
-
-            sprompt+=( "pwd" "${vcs_info_msg_0_}${trunc}"      )
-            cprompt+=( "pwd" "${vcs_info_msg_1_}%4F${trunc}%f" )
-
+        if [ ${#vcs_info_msg_2_} -ge ${sblen} ]; then
+            trunc="%${sblen}>».>${vcs_info_msg_2_}%>>%${sblen}<.«<${vcs_info_msg_2_}%<<"
         else
-
-            sprompt+=( "pwd" "${_PWD}"      )
-            cprompt+=( "pwd" "%4F${_PWD}%f" )
-
+            trunc=${vcs_info_msg_2_}
         fi
+
+        sprompt+=( "pwd" "${vcs_info_msg_0_}${trunc}"      )
+        cprompt+=( "pwd" "${vcs_info_msg_1_}%4F${trunc}%f" )
+
+    else
+
+        sprompt+=( "pwd" "${_PWD}"      )
+        cprompt+=( "pwd" "%4F${_PWD}%f" )
 
     fi
 
@@ -374,11 +359,6 @@ function batteryUpdate () {
     fi
 }
 
-function updateAll () {
-    UPDATEVCS=1
-    UPDATERPROMPT=1
-}
-
 autoload zsh/terminfo;
 
 if [[ "$terminfo[colors]" -ge 8 ]]; then
@@ -389,11 +369,10 @@ fi
 
 # initial update
 batteryUpdate
-updateAll # preexecVCSUpdate
 weatherUpdate
 
-chpwd_functions+=(updateAll)
-resize_functions+=(preexecVCSUpdate rpromptUpdate)
+chpwd_functions+=(vcsUpdate rpromptUpdate)
+resize_functions+=(vcsUpdate rpromptUpdate)
 precmd_functions+=(mkHistPrompt batteryUpdate vcsUpdate rpromptUpdate promptUpdate)
-preexec_functions+=(preexecVCSUpdate rpromptUpdate)
-periodic_functions+=(updateWeather)
+preexec_functions+=(vcsUpdate rpromptUpdate)
+periodic_functions+=(weatherUpdate)
