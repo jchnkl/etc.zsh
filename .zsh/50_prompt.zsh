@@ -281,7 +281,7 @@ function vcsUpdate () {
 
         sblen=$(((${RPMAX}-${#vcs_info_msg_3_})/2 - 1))
 
-        if [ ${#vcs_info_msg_2_} -ge ${sblen} ]; then
+        if [ ${#vcs_info_msg_2_} -ge $((${sblen} * 2)) ]; then
             trunc="%${sblen}>».>${vcs_info_msg_2_}%>>%${sblen}<.«<${vcs_info_msg_2_}%<<"
         else
             trunc=${vcs_info_msg_2_}
