@@ -2,7 +2,6 @@
 # updateWeather: check age of file and (don't) update
 
 local PERIOD=600
-local OLDCOLS=0
 local WEATHEROK=0
 local BATOK=0
 # 1.618 ^= golden ratio
@@ -269,16 +268,6 @@ function rpromptUpdate () {
 }
 
 function promptUpdate () {
-
-    if [ ${OLDCOLS} -ne ${COLUMNS} ]; then
-        OLDCOLS=${COLUMNS}
-        _RPMAX=$(((${COLUMNS}*1000)/1618))
-
-        for f in ${resize_functions}; do
-            eval $f
-        done
-
-    fi
 
     PROMPT="
 $(constructPrompt ${_pelems} "[" "!" " " "#" "]" " " )"
