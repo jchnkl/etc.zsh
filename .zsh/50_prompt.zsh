@@ -6,6 +6,7 @@ local OLDCOLS=0
 local WEATHEROK=0
 local BATOK=0
 local UPDATEVCS=1
+local UPDATERPROMPT=1
 # 1.618 ^= golden ratio
 local _RPMAX=$(((${COLUMNS}*1000)/1618))
 
@@ -259,13 +260,18 @@ function mkTruncatedRPrompt () {
 
 function rpromptUpdate () {
 
-    local _TRUNLEN=$((${_RPMAX}/2 - 1))
-    local _CURPATH=${(%)${:-%~}}
+    if [ ${UPDATERPROMPT} -eq 1 ]; then
+        UPDATERPROMPT=0
 
-    sprompt+=( "tpwd" "%${_TRUNLEN}>».>%${_CURPATH}%>>%${_TRUNLEN}<.»<%${_CURPATH}%<<" )
-    cprompt+=( "tpwd" "%4F%${_TRUNLEN}>».>%${_CURPATH}%>>%${_TRUNLEN}<.«<%${_CURPATH}%<<%f" )
+        local _TRUNLEN=$((${_RPMAX}/2 - 1))
+        local _CURPATH=${(%)${:-%~}}
 
-    RPROMPT=$(mkTruncatedRPrompt ${_pelems} ${_RPMAX} )
+        sprompt+=( "tpwd" "%${_TRUNLEN}>».>%${_CURPATH}%>>%${_TRUNLEN}<.»<%${_CURPATH}%<<" )
+        cprompt+=( "tpwd" "%4F%${_TRUNLEN}>».>%${_CURPATH}%>>%${_TRUNLEN}<.«<%${_CURPATH}%<<%f" )
+
+        RPROMPT=$(mkTruncatedRPrompt ${_pelems} ${_RPMAX} )
+
+    fi
 
 }
 
@@ -274,6 +280,9 @@ function promptUpdate () {
     if [ ${OLDCOLS} -ne ${COLUMNS} ]; then
         OLDCOLS=${COLUMNS}
         _RPMAX=$(((${COLUMNS}*1000)/1618))
+
+        UPDATERPROMPT=1
+
         for f in ${resize_functions}; do
             eval $f
         done
@@ -306,6 +315,7 @@ preexecVCSUpdate () {
     if [[ $1 =~ '^git.*' || $2 =~ '^git.*' || $# -eq 0 ]]; then
 
         UPDATEVCS=1
+        UPDATERPROMPT=1
 
     fi
 
@@ -364,6 +374,11 @@ function batteryUpdate () {
     fi
 }
 
+function updateAll () {
+    UPDATEVCS=1
+    UPDATERPROMPT=1
+}
+
 autoload zsh/terminfo;
 
 if [[ "$terminfo[colors]" -ge 8 ]]; then
@@ -374,11 +389,11 @@ fi
 
 # initial update
 batteryUpdate
-preexecVCSUpdate
+updateAll # preexecVCSUpdate
 weatherUpdate
 
-chpwd_functions+=(preexecVCSUpdate vcsUpdate rpromptUpdate)
-resize_functions+=(preexecVCSUpdate vcsUpdate rpromptUpdate)
+chpwd_functions+=(updateAll)
+resize_functions+=(preexecVCSUpdate rpromptUpdate)
 precmd_functions+=(mkHistPrompt batteryUpdate vcsUpdate rpromptUpdate promptUpdate)
 preexec_functions+=(preexecVCSUpdate rpromptUpdate)
-periodic_functions+=(weatherUpdate rpromptUpdate)
+periodic_functions+=(updateWeather)
