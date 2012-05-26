@@ -317,7 +317,6 @@ vcsUpdate () {
 
     local sblen= trunc=
 
-    #updateVCSPrompt
     vcs_info
 
     if [ -n "${vcs_info_msg_0_}" ]; then
