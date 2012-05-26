@@ -22,6 +22,7 @@ local _HOSTSEP="@";
 local _PWD="%~";
 local _LOGIN="%n";
 local _HOST="%2m";
+local _ELLIPSIS="‥";
 
 typeset -A sprompt
 sprompt+=( " "     "${_WS}"                     )
@@ -291,7 +292,7 @@ function vcsUpdate () {
     if [ -n "${vcs_info_msg_0_}" ]; then
 
         sblen=$((${RPMAX} - ${#vcs_info_msg_3_} - 2))
-        sbtrunlen=$((${sblen}/2 - 1))
+        sbtrunlen=$((${sblen}/2))
 
         #echo "vcsUpdate: _sblen: ${sblen}" 1>&2
         #echo "vcsUpdate: _sbtrunlen: ${sbtrunlen}" 1>&2
@@ -302,7 +303,7 @@ function vcsUpdate () {
         if [ ${#vcs_info_msg_2_} -le ${sblen} ]; then
             trunc=":${vcs_info_msg_2_}"
         elif [ ${sblen} -gt 8 -a ${#vcs_info_msg_2_} -ge ${sblen} ]; then
-            trunc=":%${sbtrunlen}>».>${vcs_info_msg_2_}%>>%${sbtrunlen}<.«<${vcs_info_msg_2_}%<<"
+            trunc=":%${sbtrunlen}>>${vcs_info_msg_2_}%>>%${sbtrunlen}<${_ELLIPSIS}<${vcs_info_msg_2_}%<<"
         else
             trunc=""
         fi
@@ -349,8 +350,8 @@ function rpromptUpdate () {
     #echo "rpromptUpdate: _TRUNLEN: ${_TRUNLEN}" 1>&2
     #echo "rpromptUpdate: #_CURPATH: ${#_CURPATH}" 1>&2
 
-    sprompt+=( "tpwd" "%${_TRUNLEN}>».>%${_CURPATH}%>>%${_TRUNLEN}<.»<%${_CURPATH}%<<" )
-    cprompt+=( "tpwd" "%4F%${_TRUNLEN}>».>%${_CURPATH}%>>%${_TRUNLEN}<.«<%${_CURPATH}%<<%f" )
+    sprompt+=( "tpwd" "%${_TRUNLEN}>>%${_CURPATH}%>>%${_TRUNLEN}<${_ELLIPSIS}<%${_CURPATH}%<<" )
+    cprompt+=( "tpwd" "%4F%${_TRUNLEN}>>%${_CURPATH}%>>%${_TRUNLEN}<${_ELLIPSIS}<%${_CURPATH}%<<%f" )
 
     #echo "rpromptUpdate: #sprompt[tpwd]: ${#${(%)sprompt[tpwd]}}" 1>&2
     #echo "rpromptUpdate: (%)sprompt[tpwd]:\n${(%)sprompt[tpwd]}" 1>&2
