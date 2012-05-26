@@ -56,7 +56,7 @@ cprompt+=( "ldate"  "${_EMPH}%D{%A}%f, ${_EMPH}%D{%d}%f${_NCOLO}%D{. %B %Y}" )
 cprompt+=( "sdate"  "${_EMPH}%D{%a}%f, ${_EMPH}%D{%d}%f${_NCOLO}%D{. %b %y}" )
 
 function mkHistPrompt () {
-    local HEVENTS=${(l.3..0.)$((${HISTCMD} % 10000))}
+    local HEVENTS=${(l.4..0.)$((${HISTCMD} % 10000))}
     cprompt+=( "!" "${_NCOLO}!${_EMPH}${HEVENTS}%f" )
     sprompt+=( "!" "!${HEVENTS}" )
 }
