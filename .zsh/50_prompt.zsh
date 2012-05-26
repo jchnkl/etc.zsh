@@ -249,6 +249,9 @@ function mkTruncatedRPrompt () {
     while [ ${#${(%)_tmp}} -gt ${RPMAX} ]; do
         _c=$((${_c} + 1))
         _tmp=$(tmpprompt ${_c})
+        #echo "mkTruncatedRPrompt: #_c: ${_c}" 1>&2
+        #echo "mkTruncatedRPrompt: #_tmp: ${#${(%)_tmp}}" 1>&2
+        #echo "mkTruncatedRPrompt: ($)_tmp:\n${(%)_tmp}" 1>&2
     done
 
     mkRPrompt ${_c} $_pelems
@@ -281,6 +284,12 @@ function vcsUpdate () {
 
         sblen=$(((${RPMAX}-${#vcs_info_msg_3_})/2 - 1))
 
+        #echo "vcsUpdate: _sblen: ${sblen}" 1>&2
+        #echo "vcsUpdate: _sbtrunlen: ${sbtrunlen}" 1>&2
+        #echo "vcsUpdate: #vcs_info_msg_3_: ${#vcs_info_msg_3_}" 1>&2
+        #echo "vcsUpdate: #vcs_info_msg_2_: ${#vcs_info_msg_2_}" 1>&2
+        #echo "vcsUpdate: rpmax: ${RPMAX}" 1>&2
+
         if [ ${#vcs_info_msg_2_} -ge $((${sblen} * 2)) ]; then
             trunc=":%${sblen}>».>${vcs_info_msg_2_}%>>%${sblen}<.«<${vcs_info_msg_2_}%<<"
         else
@@ -296,6 +305,9 @@ function vcsUpdate () {
         cprompt+=( "pwd" "%4F${_PWD}%f" )
 
     fi
+
+    #echo "vcsUpdate: #sprompt[pwd]: ${#${(%)sprompt[pwd]}}" 1>&2
+    #echo "vcsUpdate: (%)sprompt[pwd]:\n${(%)sprompt[pwd]}" 1>&2
 
 }
 
@@ -322,8 +334,15 @@ function rpromptUpdate () {
     local _TRUNLEN=$((${RPMAX}/2 - 1))
     local _CURPATH=${(%)${:-%~}}
 
+    #echo "rpromptUpdate: RPMAX: ${RPMAX}" 1>&2
+    #echo "rpromptUpdate: _TRUNLEN: ${_TRUNLEN}" 1>&2
+    #echo "rpromptUpdate: #_CURPATH: ${#_CURPATH}" 1>&2
+
     sprompt+=( "tpwd" "%${_TRUNLEN}>».>%${_CURPATH}%>>%${_TRUNLEN}<.»<%${_CURPATH}%<<" )
     cprompt+=( "tpwd" "%4F%${_TRUNLEN}>».>%${_CURPATH}%>>%${_TRUNLEN}<.«<%${_CURPATH}%<<%f" )
+
+    #echo "rpromptUpdate: #sprompt[tpwd]: ${#${(%)sprompt[tpwd]}}" 1>&2
+    #echo "rpromptUpdate: (%)sprompt[tpwd]:\n${(%)sprompt[tpwd]}" 1>&2
 
     RPROMPT=$(mkTruncatedRPrompt ${_pelems} ${RPMAX} )
 
