@@ -54,7 +54,7 @@ cprompt+=( "ldate"  "${_EMPH}%D{%A}%f, ${_EMPH}%D{%d}%f${_NCOLO}%D{. %B %Y}" )
 cprompt+=( "sdate"  "${_EMPH}%D{%a}%f, ${_EMPH}%D{%d}%f${_NCOLO}%D{. %b %y}" )
 
 function rpmaxSize () {
-    echo $(( ( ${COLUMNS} * 1000 / 1618 ) & 0xfffe + 4 ))
+    echo $(( ( ${COLUMNS} * 1000 / 1618 - 4) & 0xfffe + 4 ))
 }
 
 function rpmaxUpdate () {
