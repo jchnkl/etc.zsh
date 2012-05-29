@@ -159,27 +159,27 @@ function updateBattery() {
 function updateBatteryPrompt () {
     updateBattery
 
-    sbatcolor=${(%)reply[2]}
-    local sbattery=${(%)reply[1]}
+    sbatcolor=${reply[2]}
+    local sbattery=${reply[1]}
 
     function shortBatteryColor () {
         echo ${sbatcolor}
     }
 
-    plainElements+=(  "sbattery" ${sbattery}       )
-    elementSizes+=(   "sbattery" ${#sbattery}      )
-    colorFunctions+=( "sbattery" shortBatteryColor )
+    plainElements+=(  "sbattery" ${sbattery}        )
+    elementSizes+=(   "sbattery" ${#${(%)sbattery}} )
+    colorFunctions+=( "sbattery" shortBatteryColor  )
 
-    lbatcolor=${(%)reply[4]}
-    local lbattery=${(%)reply[3]}
+    lbatcolor=${reply[4]}
+    local lbattery=${reply[3]}
 
     function longBatteryColor () {
         echo ${lbatcolor}
     }
 
-    plainElements+=(  "lbattery" ${lbattery}      )
-    elementSizes+=(   "lbattery" ${#lbattery}     )
-    colorFunctions+=( "lbattery" longBatteryColor )
+    plainElements+=(  "lbattery" ${lbattery}        )
+    elementSizes+=(   "lbattery" ${#${(%)lbattery}} )
+    colorFunctions+=( "lbattery" longBatteryColor   )
 }
 
 precmd_functions+=( updateBatteryPrompt )

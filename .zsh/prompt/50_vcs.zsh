@@ -77,9 +77,9 @@ function updateVcsPrompt () {
             echo "${vcs_info_msg_1_}%${_dirc}F${trunc}%f"
         }
 
-        plainElements+=(  "vcs" ${vcs}       )
-        elementSizes+=(   "vcs" ${#vcs}      )
-        colorFunctions+=( "vcs" vcsColor )
+        plainElements+=(  "vcs" ${vcs}        )
+        elementSizes+=(   "vcs" ${#${(%)vcs}} )
+        colorFunctions+=( "vcs" vcsColor      )
 
     } else {
         plainElements+=(  "vcs" "" )
