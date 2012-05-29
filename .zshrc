@@ -138,3 +138,7 @@ r() {
 for conf in ~/.zsh/*.zsh; do source $conf; done
 
 source ${HOME}/.profile
+
+# history widget:
+# read from global histfile for completion
+# use a session local histfile (fc -p)
