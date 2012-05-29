@@ -146,3 +146,5 @@ source ${HOME}/.profile
 # history widget:
 # read from global histfile for completion
 # use a session local histfile (fc -p)
+
+# alias for all directories in ~/proj or all directories with .git ..
