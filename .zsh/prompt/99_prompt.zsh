@@ -3,10 +3,10 @@ function setPrompts () {
 PROMPT="
 $( buildPrompt "[" "!" " " "#" "]" " " )"
 
-    if [[ -n "${vcs_info_msg_0_}" ]] {
-        RPROMPT=$( vcsPrompt )
-    } elif [[ -n "${SSH_CONNECTION}" ]] {
+    if [[ -n "${SSH_CONNECTION}" ]] {
         RPROMPT=$( sshPrompt )
+    } elif [[ -n "${vcs_info_msg_0_}" ]] {
+        RPROMPT=$( vcsPrompt )
     } elif [[ ${PWD} = ${HOME} ]] {
         RPROMPT=$( homePrompt )
     } else {
