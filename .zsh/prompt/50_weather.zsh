@@ -9,6 +9,8 @@ function concatWith() {
 }
 
 function updateWeather() {
+
+    reply=
     local mode=$1 _WS=" " _COMMA=","
     local pelems=
     typeset -A pelems
