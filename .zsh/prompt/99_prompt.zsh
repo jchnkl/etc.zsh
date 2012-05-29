@@ -1,7 +1,7 @@
 function setPrompts () {
 
 PROMPT="
-$( buildPrompt "[" "!" " " "#" "]" )"
+$( buildPrompt "[" "!" " " "#" "]" " " )"
 
     if [[ -n "${SSH_CONNECTION}" ]] {
         RPROMPT=$( sshPrompt )
