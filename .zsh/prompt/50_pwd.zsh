@@ -30,7 +30,7 @@ function collapse () {
 
 function updatePwdPrompt () {
 
-    local maxlen=$( maxLen )
+    local maxlen=$(( $( maxLen ) - 2 ))
     local ellipsis=${plainElements[ellipsis]}
 
     local c=0 lvl=0 prevpwd= nextpwd=${(%)${:-%~}}
