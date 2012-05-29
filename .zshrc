@@ -135,7 +135,7 @@ r() {
   autoload -U $f:t
 }
 
-for conf in ~/.zsh/*.zsh; do source $conf; done
+for prompt in ~/.zsh/prompt/*.zsh; do source $prompt; done
 
 source ${HOME}/.profile
 
