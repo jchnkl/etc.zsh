@@ -86,27 +86,34 @@ function updateWeather() {
 function updateWeatherPrompt () {
     updateWeather
 
-    sweathercolor=${reply[2]}
-    local sweather=${reply[1]}
+    if [[ -z $reply ]] {
+        return
+    } else {
 
-    function shortWeatherColor () {
-        echo ${sweathercolor}
+        sweathercolor=${reply[2]}
+        local sweather=${reply[1]}
+
+        function shortWeatherColor () {
+            echo ${sweathercolor}
+        }
+
+        plainElements+=(  "sweather" ${sweather}        )
+        elementSizes+=(   "sweather" ${#${(%)sweather}} )
+        colorFunctions+=( "sweather" shortWeatherColor  )
+
+        lweathercolor=${reply[4]}
+        local lweather=${reply[3]}
+
+        function longWeatherColor () {
+            echo ${lweathercolor}
+        }
+
+        plainElements+=(  "lweather" ${lweather}        )
+        elementSizes+=(   "lweather" ${#${(%)lweather}} )
+        colorFunctions+=( "lweather" longWeatherColor   )
+
     }
 
-    plainElements+=(  "sweather" ${sweather}        )
-    elementSizes+=(   "sweather" ${#${(%)sweather}} )
-    colorFunctions+=( "sweather" shortWeatherColor  )
-
-    lweathercolor=${reply[4]}
-    local lweather=${reply[3]}
-
-    function longWeatherColor () {
-        echo ${lweathercolor}
-    }
-
-    plainElements+=(  "lweather" ${lweather}        )
-    elementSizes+=(   "lweather" ${#${(%)lweather}} )
-    colorFunctions+=( "lweather" longWeatherColor   )
 }
 
 periodic_functions+=( updateWeatherPrompt )
