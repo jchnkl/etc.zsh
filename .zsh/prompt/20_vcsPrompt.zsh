@@ -2,7 +2,7 @@ function vcsPrompt () {
     local maxlen=$( maxLen )
 
     typeset -a p0 p1 p2 p3 p4 p5
-    p0=( "[" "vcs" "|" "ldate" "|" "time" "|" "lbattery" "]" )
+    p0=( "[" "vcs" "|" "ldate" "|" "time" "maybeElem" "l" "|" "lbattery" "]" )
     p1=( "[" "vcs" "|" "ldate" "|" "time" "maybeElem" "l" "|" "sbattery" "]" )
     p2=( "[" "vcs" "|" "sdate" "|" "time" "maybeElem" "l" "|" "sbattery" "]" )
     p3=( "[" "vcs" "|" "time" "maybeElem" "l" "|" "sbattery" "]" )
