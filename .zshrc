@@ -40,8 +40,18 @@ compinit
 autoload -Uz colors; colors
 
 HISTFILE=~/.histfile
-HISTSIZE=10000
-SAVEHIST=10000
+
+# history events in internal list
+# This number shows up in the prompt with %h
+# I want it to stay two digit (more is useless for long gone events)
+# Since due to incappendhistory option history might grow by aroung 20% before
+# trimming. Therefore 100 - 25% * 100
+# 9999/1.2 = 8200
+HISTSIZE=8200
+
+# maximum number of history events saved in $HISTFILE
+SAVEHIST=8200
+
 bindkey -v
 # End of lines configured by zsh-newuser-install
 
