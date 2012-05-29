@@ -2,6 +2,32 @@ function maxLen () {
     echo $(( ${COLUMNS} * 1000 / 1618 ))
 }
 
+function maybeElem () {
+    local side=$1 s=$2 e=$3 res=
+    typeset -a res
+
+    reply=
+    if [[ $e =~ "^$0.*" ]] {
+        eval "${(ps: :)e}"
+    }
+
+    if [[ -n "${(@)reply}" ]] {
+        res=( $reply )
+    } elif [[ ${elementSizes[$e]} -ne 0 ]] {
+        res=( $e )
+    } else {
+        res=( )
+    }
+
+    if [[ -n "${(@)res}" && ${side} = "l" ]] {
+        reply=( $s $res )
+    } elif [[ -n "${(@)res}" && ${side} = "r" ]] {
+        reply=( $res $s )
+    } else {
+        reply=
+    }
+}
+
 function calculateSize () {
     local size=0
 
@@ -26,19 +52,31 @@ function colorize () {
 
 function buildPrompt () {
 
-    local pelems= prompt=
-    typeset -A pelems
+    local elems= prompt=
+    typeset -a elems
 
-    for e in $@; do
+    elems=( $@ )
 
-        if [[ "$terminfo[colors]" -ge 8 ]]; then
+    local n=1
+    while [[ $n -le ${#elems} ]] {
+        local e=${elems[n]}
+
+        if [[ $e = "maybeElem" ]] {
+
+            eval "maybeElem \${elems[n+1]} \${elems[n+2]} \${elems[n+3]}"
+            prompt+=$( buildPrompt $reply )
+            n=$(( n + 3 ))
+
+        } elif [[ "$terminfo[colors]" -ge 8 ]] {
             prompt+=$(colorize $e ${plainElements[$e]})
-        else
+        } else {
             prompt+=${plainElements[$e]}
-        fi
+        }
 
-    done
+        n=$(( n + 1 ))
 
-    echo ${(%)prompt}
+    }
+
+    echo ${prompt}
 
 }
