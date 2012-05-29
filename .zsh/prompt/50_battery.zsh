@@ -1,5 +1,6 @@
 function updateBattery() {
 
+    reply=
     local days= hours= mins=
     function splitTime() {
         days= hours= mins=
