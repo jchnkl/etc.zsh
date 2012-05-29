@@ -110,3 +110,6 @@ function updateWeatherPrompt () {
 }
 
 periodic_functions+=( updateWeatherPrompt )
+
+# run at least once at startup to seed values
+updateWeatherPrompt
