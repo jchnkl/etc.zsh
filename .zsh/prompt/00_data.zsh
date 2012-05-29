@@ -24,7 +24,7 @@ function rightBrktColor () {
 }
 
 function historyColor () {
-    echo "%${_norm}!%${_emph}F${plainElements[$1]}%f"
+    echo "%${_norm}F!%${_emph}F%h%f"
 }
 
 function bangColor () {
@@ -38,13 +38,6 @@ colorFunctions+=( "]" rightBrktColor )
 colorFunctions+=( "!" historyColor   )
 colorFunctions+=( "#" bangColor      )
 
-
-function mkHistPrompt () {
-    #local HEVENTS=${(l.3..0.)$((${HISTCMD} % 1000))}
-    local HEVENTS="%h"
-    cprompt+=( "!" "${_NCOLO}!${_EMPH}${HEVENTS}%f" )
-    sprompt+=( "!" "!${HEVENTS}" )
-}
 
 typeset -A plainElements
 plainElements+=( " "        " "                )
