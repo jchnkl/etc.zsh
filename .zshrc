@@ -137,6 +137,10 @@ r() {
 
 for prompt in ~/.zsh/prompt/*.zsh; do source $prompt; done
 
+if [[ -x $(which fasd) ]] {
+    eval "$(fasd --init auto)"
+}
+
 source ${HOME}/.profile
 
 # history widget:
