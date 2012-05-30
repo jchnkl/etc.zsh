@@ -56,17 +56,59 @@ bindkey -v
 # End of lines configured by zsh-newuser-install
 
 # zshoptions(1)
-setopt appendhistory extendedglob nomatch notify
-setopt kshglob autocd autopushd cdablevars chasedots chaselinks histnostore
-setopt histignorealldups histsavenodups histreduceblanks histverify
-setopt incappendhistory nohup transientrprompt
-setopt listrowsfirst # menu_complete
-setopt autocontinue
-setopt interactivecomments
-setopt listambiguous
-setopt autolist
-setopt noautomenu
-unsetopt beep
+setopt     no_beep                \
+                                  \
+           transientrprompt       \
+                                  \
+           interactivecomments    \
+                                  \
+           nohup                  \
+           notify                 \
+           autocontinue           \
+                                  \
+        no_listbeep               \
+        no_alwaystoend            \
+        no_menucomplete           \
+                                  \
+           autolist               \
+           automenu               \
+           listambiguous          \
+                                  \
+           autonamedirs           \
+           autoparamkeys          \
+           autoparamslash         \
+           autoremoveslash        \
+           alwayslastprompt       \
+                                  \
+        no_recexact               \
+           globcomplete           \
+           completeinword         \
+           completealiases        \
+                                  \
+           listtypes              \
+           listpacked             \
+           listrowsfirst          \
+                                  \
+           hashlistall            \
+                                  \
+        no_match                  \
+           kshglob                \
+           extendedglob           \
+                                  \
+           autocd                 \
+           autopushd              \
+           cdablevars             \
+           chasedots              \
+           chaselinks             \
+                                  \
+           appendhistory          \
+           incappendhistory       \
+           histnostore            \
+           histignorealldups      \
+           histsavenodups         \
+           histreduceblanks       \
+           histverify
+
 
 #PROMPT='[%h %~%(!.#.$)] '
 #RPROMPT='[%n@%m, %D{%a %b %d, %H:%M] '
