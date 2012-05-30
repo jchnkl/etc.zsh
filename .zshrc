@@ -86,7 +86,7 @@ setopt     no_beep                \
         no_recexact               \
            globcomplete           \
            completeinword         \
-           completealiases        \
+        no_completealiases        \
                                   \
            listtypes              \
            listpacked             \
