@@ -153,6 +153,9 @@ pic=/data/media/img/pic
 jdl=/data/media/jdl/downloads
 
 for d in ${HOME}/proj/*(/); { alias $d:t=$d }
+for d in ${HOME}/proj/*(/); {
+    hash -d ${d:t}=${d}
+}
 
 # open files with programs matching the extension
 function setsuf() {
@@ -197,5 +200,3 @@ source ${HOME}/.profile
 # history widget:
 # read from global histfile for completion
 # use a session local histfile (fc -p)
-
-# alias for all directories in ~/proj or all directories with .git ..
