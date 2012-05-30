@@ -136,14 +136,20 @@ pdf=${HOME}/pdf
 src=${HOME}/src
 tex=${HOME}/tex
 tmp=${HOME}/tmp
-usr=${HOME}/usr
-work=${HOME}/work
+usr=${HOME}/.local/usr
+proj=${HOME}/proj
+vim=${HOME}/.vim
+xmonad=${HOME}/.xmonad
+dotfiles=${HOME}/dotfiles
+
 media=/data/media
 music=/data/media/music
 movie=/data/media/movie
 img=/data/media/img
 pic=/data/media/img/pic
 jdl=/data/media/jdl/downloads
+
+for d in ${HOME}/proj/*(/); { alias $d:t=$d }
 
 # open files with programs matching the extension
 function setsuf() {
