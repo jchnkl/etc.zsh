@@ -3,6 +3,16 @@
 # add custom completion scripts
 fpath=(~/.zsh/completion $fpath)
 
+function addorig () {
+    compadd ${PREFIX}
+    compadd foo bar baz
+}
+
+zle -C addorig complete-word addorig
+
+bindkey '' addorig
+
+
 zstyle ':completion:*' use-cache on
 zstyle ':completion:*' cache-path ~/.zsh/cache
 
