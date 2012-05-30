@@ -25,7 +25,7 @@ zstyle ':completion:*' substitute true
 #zstyle ':completion:*' rehash true
 
 zstyle ':completion:*' original true
-#zstyle ':completion:*' ambiguous true
+zstyle ':completion:*' ambiguous true
 zstyle ':completion:*' old-matches true
 zstyle ':completion:*' match-original both
 zstyle ':completion:*' insert-unambiguous true
