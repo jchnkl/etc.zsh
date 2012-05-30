@@ -134,25 +134,24 @@ TIMEFMT="
 "
 
 # named directories
-doc=${HOME}/doc
-pdf=${HOME}/pdf
-src=${HOME}/src
-tex=${HOME}/tex
-tmp=${HOME}/tmp
-usr=${HOME}/.local/usr
-proj=${HOME}/proj
-vim=${HOME}/.vim
-xmonad=${HOME}/.xmonad
-dotfiles=${HOME}/dotfiles
+hash -d doc=${HOME}/doc               \
+        pdf=${HOME}/pdf               \
+        src=${HOME}/src               \
+        tex=${HOME}/tex               \
+        tmp=${HOME}/tmp               \
+        usr=${HOME}/.local/usr        \
+        proj=${HOME}/proj             \
+        vim=${HOME}/.vim              \
+        xmonad=${HOME}/.xmonad        \
+        dotfiles=${HOME}/dotfiles     \
+                                      \
+        media=/data/media             \
+        music=/data/media/music       \
+        movie=/data/media/movie       \
+        img=/data/media/img           \
+        pic=/data/media/img/pic       \
+        jdl=/data/media/jdl/downloads
 
-media=/data/media
-music=/data/media/music
-movie=/data/media/movie
-img=/data/media/img
-pic=/data/media/img/pic
-jdl=/data/media/jdl/downloads
-
-for d in ${HOME}/proj/*(/); { alias $d:t=$d }
 for d in ${HOME}/proj/*(/); {
     hash -d ${d:t}=${d}
 }
