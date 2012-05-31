@@ -133,6 +133,12 @@ bindkey -a  '^U'        backward-kill-line
 bindkey -v  '^[[33~'    backward-kill-word
 bindkey -a  '^[[33~'    backward-kill-word
 
+bindkey -v  '^R'        history-incremental-search-backward
+bindkey -a  '^R'        history-incremental-search-backward
+
+bindkey -v  '^S'        history-incremental-search-forward
+bindkey -a  '^S'        history-incremental-search-forward
+
 
 REPORTTIME=2
 TIMEFMT="
