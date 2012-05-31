@@ -120,8 +120,8 @@ autoload -U edit-command-line
 zle -N edit-command-line
 
 bindkey -v
-bindkey -M vicmd    v           edit-command-line
-bindkey             "^[[Z"      reverse-menu-complete
+bindkey                             "^[[Z"      reverse-menu-complete
+bindkey -M vicmd                    v           edit-command-line
 bindkey -M main -M viins -M vicmd   '^U'        backward-kill-line
 bindkey -M main -M viins -M vicmd   '^[[33~'    backward-kill-word
 
