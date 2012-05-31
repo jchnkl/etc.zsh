@@ -122,6 +122,7 @@ setopt     no_beep                \
 autoload -U edit-command-line
 zle -N edit-command-line
 
+# sets viins as default and link it to main
 bindkey -v
 bindkey                             "^[[Z"      reverse-menu-complete
 bindkey -M vicmd                    v           edit-command-line
