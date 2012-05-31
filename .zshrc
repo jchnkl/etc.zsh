@@ -125,8 +125,11 @@ zle -N edit-command-line
 bindkey -v
 bindkey                             "^[[Z"      reverse-menu-complete
 bindkey -M vicmd                    v           edit-command-line
-bindkey -M main -M viins -M vicmd   '^U'        backward-kill-line
-bindkey -M main -M viins -M vicmd   '^[[33~'    backward-kill-word
+bindkey -v  '^U'        backward-kill-line
+bindkey -a  '^U'        backward-kill-line
+
+bindkey -v  '^[[33~'    backward-kill-word
+bindkey -a  '^[[33~'    backward-kill-word
 
 
 REPORTTIME=2
