@@ -125,7 +125,7 @@ zle -N edit-command-line
 # sets viins as default and link it to main
 bindkey -v
 bindkey     "^[[Z"      reverse-menu-complete
-bindkey -M vicmd                    v           edit-command-line
+bindkey -a  v           edit-command-line
 
 bindkey -v  '^U'        backward-kill-line
 bindkey -a  '^U'        backward-kill-line
