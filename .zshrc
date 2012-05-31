@@ -55,7 +55,6 @@ HISTSIZE=8200
 # maximum number of history events saved in $HISTFILE
 SAVEHIST=8200
 
-bindkey -v
 # End of lines configured by zsh-newuser-install
 
 # zshoptions(1)
@@ -120,8 +119,9 @@ setopt     no_beep                \
 autoload -U edit-command-line
 zle -N edit-command-line
 
-bindkey -M vicmd v edit-command-line
-bindkey "^[[Z" reverse-menu-complete
+bindkey -v
+bindkey -M vicmd    v           edit-command-line
+bindkey             "^[[Z"      reverse-menu-complete
 
 
 REPORTTIME=2
