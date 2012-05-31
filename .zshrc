@@ -1,5 +1,8 @@
 # The following lines were added by compinstall
 
+# make ^S and ^Q available; who needs this nowadays?
+stty -ixon
+
 # add custom completion scripts
 fpath=(~/.zsh/completion $fpath)
 
