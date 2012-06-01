@@ -1,0 +1,15 @@
+#autoload
+
+local expl ret=1 oldcursor=
+
+oldcursor=$CURSOR
+
+_complete && ret=0
+
+_tags matches original
+
+_description -V original expl original
+
+compadd "$expl[@]" -U -Q - "$IPREFIX$PREFIX$SUFFIX$ISUFFIX"
+
+return ret
