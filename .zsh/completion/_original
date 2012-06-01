@@ -8,8 +8,10 @@ _complete && ret=0
 
 _tags matches original
 
-_description -V original expl original
+if [[ ${compstate[nmatches]} -gt 1 ]]; then
+    _description -V original expl original
 
-compadd "$expl[@]" -U -Q - "$IPREFIX$PREFIX$SUFFIX$ISUFFIX"
+    compadd "$expl[@]" -U -Q - "$IPREFIX$PREFIX$SUFFIX$ISUFFIX"
+fi
 
 return ret
