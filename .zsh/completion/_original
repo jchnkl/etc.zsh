@@ -1,18 +1,10 @@
 #autoload
 
 local ret=1
-local oms="$_old_match_string"
-
-_old_match_string="$PREFIX$SUFFIX$HISTNO"
 
 _complete && ret=0
 
 if [[ -n "$IPREFIX$PREFIX$SUFFIX$ISUFFIX" && ${compstate[nmatches]} -gt 1 ]]; then
-
-    if [[ "$oms" = "$PREFIX$SUFFIX$HISTNO" &&
-        "$compstate[insert]" = automenu-unambiguous ]]; then
-        compstate[insert]=automenu
-    fi
 
     if [[ "$compstate[insert]" != *menu ]]; then
         compstate[pattern_insert]=
