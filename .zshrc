@@ -27,6 +27,7 @@ zstyle ':completion:*' squeeze-slashes true
 zstyle ':completion:*' substitute true
 #zstyle ':completion:*' rehash true
 
+zstyle ':completion:*' group-name ''
 zstyle ':completion:*' original true
 zstyle ':completion:*' ambiguous true
 zstyle ':completion:*' old-matches true
