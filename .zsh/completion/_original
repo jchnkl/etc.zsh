@@ -2,7 +2,6 @@
 
 local expl ret=1 oldcursor=
 
-oldcursor=$CURSOR
 
 _complete && ret=0
 
