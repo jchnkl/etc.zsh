@@ -1,6 +1,6 @@
 #autoload
 
-local expl ret=1 oldcursor=
+local expl ret=1
 
 if [[ ${compstate[nmatches]} -gt 1 ]]; then
 
