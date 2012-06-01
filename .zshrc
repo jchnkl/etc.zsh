@@ -41,6 +41,13 @@ zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
 autoload -Uz compinit
 compinit
 
+slash-backward-kill-word() {
+    local WORDCHARS="${WORDCHARS:s@/@}"
+    zle backward-kill-word
+}
+
+zle -N slash-backward-kill-word
+
 # End of lines added by compinstall
 # Lines configured by zsh-newuser-install
 
@@ -131,8 +138,8 @@ bindkey -a  v           edit-command-line
 bindkey -v  '^U'        backward-kill-line
 bindkey -a  '^U'        backward-kill-line
 
-bindkey -v  '^[[33~'    backward-kill-word
-bindkey -a  '^[[33~'    backward-kill-word
+bindkey -v  '^[[33~'    slash-backward-kill-word
+bindkey -a  '^[[33~'    slash-backward-kill-word
 
 bindkey -v  '^R'        history-incremental-search-backward
 bindkey -a  '^R'        history-incremental-search-backward
