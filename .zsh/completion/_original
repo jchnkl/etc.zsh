@@ -1,31 +1,15 @@
 #autoload
 
 local expl ret=1 oldcursor=
-#echo ${compstate[nmatches]} >> ~/zsh.dbg
-#[[ ${compstate[nmatches]} -gt 1 ]] \
-    #&& _wanted tag expl 'original prefix' compadd $PREFIX
 
 oldcursor=$CURSOR
-#compstate[to_end]=''
 
 _complete && ret=0
-#compstate[to_end]=''
 
 _tags matches original
 
-#_description all-matches expl 'original prefix'
-
-# compadd "$expl[@]" $PREFIX$SUFFIX
-#compstate[to_end]=''
-
 _description -V original expl original
-#compstate[to_end]=''
-
 compadd "$expl[@]" -U -Q - "$PREFIX$SUFFIX"
 
-#compstate[to_end]=''
-#CURSOR=$oldcursor
-#echo "$expl[@]" >> zsh.dbg
-#compadd -U $PREFIX
 
 return ret
