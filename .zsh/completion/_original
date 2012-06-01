@@ -2,15 +2,19 @@
 
 local expl ret=1
 
+if [[ -n "$IPREFIX$PREFIX$SUFFIX$ISUFFIX" ]]; then
 
-    _complete && ret=0
+_complete && ret=0
 
     if [[ ${compstate[nmatches]} -gt 1 ]]; then
         _tags matches original
 
         _description -V original expl original
 
-    compadd "$expl[@]" -U -Q - "$IPREFIX$PREFIX$SUFFIX$ISUFFIX"
+        compadd "$expl[@]" -U -Q - "$IPREFIX$PREFIX$SUFFIX$ISUFFIX"
+
+    fi
+
 fi
 
 return ret
