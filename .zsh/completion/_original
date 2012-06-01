@@ -2,10 +2,8 @@
 
 local ret=1
 local oms="$_old_match_string"
-local om="$_old_match"
 
 _old_match_string="$PREFIX$SUFFIX$HISTNO"
-_old_match="$IPREFIX$PREFIX$SUFFIX$ISUFFIX" # "$PREFIX$SUFFIX"
 
 _complete && ret=0
 
