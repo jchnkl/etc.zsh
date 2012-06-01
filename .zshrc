@@ -9,7 +9,7 @@ fpath=(~/.zsh/completion $fpath)
 zstyle ':completion:*' use-cache on
 zstyle ':completion:*' cache-path ~/.zsh/cache
 
-zstyle ':completion:*:*' completer _list _oldlist _expand _original _complete _match _ignored _correct _approximate _prefix
+zstyle ':completion:*:*' completer _original _oldlist _expand _complete _match _ignored _correct _approximate _prefix
 zstyle ':completion:*' completions true
 zstyle ':completion:*' condition true
 zstyle ':completion:*' format '%d'

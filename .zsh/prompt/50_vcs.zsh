@@ -11,10 +11,10 @@ zstyle ':vcs_info:*+*:*' debug false
 
 +vi-updateVCSPrompt () {
 
-    local                 _cgit_prompt="%2F%c%u%b%f%59F:%4F%r.%1>>%s%>>%59F"
-    local           _cgit_prompt_ahead="%2F%c%u%b%f%59F:%4F%r.%9F%1>>%s%>>%59F"
-    local       _cgit_prompt_untracked="%2F%c%u%b%f%59F:%9F%r%4F.%1>>%s%>>%59F"
-    local _cgit_prompt_ahead_untracked="%2F%c%u%b%f%59F:%9F%r%4F.%9F%1>>%s%>>%59F"
+    local                 _cgit_prompt="%2F%c%u%b%f%59F:%4F%r.%1>>%s%>>"
+    local           _cgit_prompt_ahead="%2F%c%u%b%f%59F:%4F%r.%9F%1>>%s%>>"
+    local       _cgit_prompt_untracked="%2F%c%u%b%f%59F:%9F%r%4F.%1>>%s%>>"
+    local _cgit_prompt_ahead_untracked="%2F%c%u%b%f%59F:%9F%r%4F.%9F%1>>%s%>>"
 
     local                 _sgit_prompt="%b:%r.%1>>%s%>>"
     local           _sgit_prompt_ahead="%b:%r.%1>>%s%>>!"
@@ -64,17 +64,17 @@ function updateVcsPrompt () {
         sbtrunlen=$((${sblen}/2))
 
         if [ ${#vcs_info_msg_2_} -le ${sblen} ]; then
-            trunc=":${vcs_info_msg_2_}"
+            trunc="${vcs_info_msg_2_}"
         elif [ ${sblen} -gt 8 -a ${#vcs_info_msg_2_} -ge ${sblen} ]; then
-            trunc=":%${sbtrunlen}>>${vcs_info_msg_2_}%>>%${sbtrunlen}<${plainElements[ellipsis]}<${vcs_info_msg_2_}%<<"
+            trunc="%${sbtrunlen}>>${vcs_info_msg_2_}%>>%${sbtrunlen}<${plainElements[ellipsis]}<${vcs_info_msg_2_}%<<"
         else
             trunc=""
         fi
 
-        local vcs="${vcs_info_msg_0_}${trunc}"
+        local vcs="${vcs_info_msg_0_}:${trunc}"
 
         function vcsColor () {
-            echo "${vcs_info_msg_1_}%${_dirc}F${trunc}%f"
+            echo "${vcs_info_msg_1_}%59F:%f%${_dirc}F${trunc}%f"
         }
 
         plainElements+=(  "vcs" ${vcs}        )
