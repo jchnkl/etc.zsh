@@ -6,16 +6,9 @@ _complete && ret=0
 
 if [[ -n "$IPREFIX$PREFIX$SUFFIX$ISUFFIX" && ${compstate[nmatches]} -gt 1 ]]; then
 
-    if [[ "$compstate[insert]" != *menu ]]; then
-        compstate[pattern_insert]=
-        compstate[insert]=
-    fi
-
-    if [[ "$IPREFIX$PREFIX$SUFFIX$ISUFFIX" != "${compstate[unambiguous]}" ]]; then
-        compstate[insert]=automenu
-    fi
-
     local expl
+
+    compstate[pattern_match]='*'
 
     _description -V original expl original
 
