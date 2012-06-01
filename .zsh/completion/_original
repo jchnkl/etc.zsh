@@ -13,6 +13,7 @@ _complete && ret=0
 
         compadd "$expl[@]" -U -Q - "$IPREFIX$PREFIX$SUFFIX$ISUFFIX"
 
+        compstate[insert]=${${compstate[insert]%%(-|)unambiguous}}
     fi
 
 fi
