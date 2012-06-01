@@ -11,16 +11,6 @@ _complete && ret=0
 
 if [[ -n "$IPREFIX$PREFIX$SUFFIX$ISUFFIX" && ${compstate[nmatches]} -gt 1 ]]; then
 
-    echo "====================" >> ~/zsh.dbg
-    echo "prefixe: $IPREFIX$PREFIX$SUFFIX$ISUFFIX" >> ~/zsh.dbg
-    #echo "oms: ${oms}" >> ~/zsh.dbg
-    echo "om: ${om}" >> ~/zsh.dbg
-    echo "_old_match: ${_old_match}" >> ~/zsh.dbg
-    echo "compstate[unambiguous]: ${compstate[unambiguous]}" >> ~/zsh.dbg
-    #echo "_old_match_string: ${_old_match_string}" >> ~/zsh.dbg
-    #echo "compstate[insert] vorher: ${compstate[insert]}" >> ~/zsh.dbg
-    #echo "compstate[pattern_insert] vorher: ${compstate[pattern_insert]}" >> ~/zsh.dbg
-
     if [[ "$oms" = "$PREFIX$SUFFIX$HISTNO" &&
         "$compstate[insert]" = automenu-unambiguous ]]; then
         compstate[insert]=automenu
@@ -40,9 +30,6 @@ if [[ -n "$IPREFIX$PREFIX$SUFFIX$ISUFFIX" && ${compstate[nmatches]} -gt 1 ]]; th
     _description -V original expl original
 
     compadd "$expl[@]" -U -Q - "$IPREFIX$PREFIX$SUFFIX$ISUFFIX"
-
-    echo "compstate[insert] nachher: ${compstate[insert]}" >> ~/zsh.dbg
-    echo "compstate[pattern_insert] nachher: ${compstate[pattern_insert]}" >> ~/zsh.dbg
 
 fi
 
