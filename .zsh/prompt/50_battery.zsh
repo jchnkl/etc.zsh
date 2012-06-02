@@ -114,8 +114,8 @@ function updateBattery() {
     local _STATEI= _CSTATE=
     case "$(< ${STATEFILE})" in
         idle)
-            _STATEI=""; #_CBATTERY="${_NCOLO}${_PBATTERY}%f"
-            _CSTATE="";
+            reply=
+            return
             ;;
         charging)
             _STATEI="+"; #_CBATTERY="%2F${_PBATTERY}%f"
