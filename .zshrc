@@ -48,6 +48,13 @@ slash-backward-kill-word() {
 
 zle -N slash-backward-kill-word
 
+slash-vi-backward-word() {
+    local WORDCHARS="${WORDCHARS:s@/@}"
+    zle vi-backward-word
+}
+
+zle -N slash-vi-backward-word
+
 # End of lines added by compinstall
 # Lines configured by zsh-newuser-install
 
@@ -140,6 +147,9 @@ bindkey -a  '^U'        backward-kill-line
 
 bindkey -v  '^[[33~'    slash-backward-kill-word
 bindkey -a  '^[[33~'    slash-backward-kill-word
+
+bindkey -v  '^B'        slash-vi-backward-word
+bindkey -a  '^B'        slash-vi-backward-word
 
 bindkey -v  '^R'        history-incremental-search-backward
 bindkey -a  '^R'        history-incremental-search-backward
