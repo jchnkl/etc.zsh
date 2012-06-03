@@ -28,12 +28,12 @@ function collapse () {
 
 }
 
-function updatePwdPrompt () {
+function truncatePath () {
 
-    local maxlen=$(( $( maxLen ) - 2 ))
-    local ellipsis=${plainElements[ellipsis]}
+    local maxlen=${1} ellipsis=${2} nextpwd=${3}
+    local c=0 lvl=0 prevpwd=
 
-    local c=0 lvl=0 prevpwd= nextpwd=${(%)${:-%~}}
+    if [[ $maxlen -eq 0 ]] { return; }
 
     for i in {1.."${#nextpwd}"}; {
         if [[ "${nextpwd[$i]}" = "/" ]] {
@@ -50,12 +50,24 @@ function updatePwdPrompt () {
     }
 
     if [[ ${#nextpwd} -gt ${maxlen} ]] {
-        nextpwd="%${maxlen}<${ellipsis}<%${nextpwd}%<<"
+        nextpwd="%${maxlen}<${ellipsis}<${nextpwd}%<<"
     }
 
-    plainElements+=( "pwd" "${(%)nextpwd}"     )
-    elementSizes+=(  "pwd" "${#${(%)nextpwd}}" )
-    colors+=(        "pwd" $_dirc              )
+    echo ${(%)nextpwd}
+
+}
+
+function updatePwdPrompt () {
+
+    local truncatepath=$( truncatePath                 \
+                            $(( $( maxLen ) - 2 ))     \
+                            ${plainElements[ellipsis]} \
+                            ${(%)${:-%~}}              \
+                        )
+
+    plainElements+=( "pwd" ${(%)truncatepath}     )
+    elementSizes+=(  "pwd" ${#${(%)truncatepath}} )
+    colors+=(        "pwd" $_dirc                 )
 
 }
 
