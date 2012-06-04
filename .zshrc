@@ -53,6 +53,36 @@ function slash-vi-backward-word () {
 }
 zle -N slash-vi-backward-word
 
+function slash-vi-backward-blank-word () {
+    local WORDCHARS="${WORDCHARS:s@/@}"
+    zle vi-backward-blank-word
+}
+zle -N slash-vi-backward-blank-word
+
+function slash-vi-forward-blank-word-end () {
+    local WORDCHARS="${WORDCHARS:s@/@}"
+    zle vi-forward-blank-word-end
+}
+zle -N slash-vi-forward-blank-word-end
+
+function slash-vi-forward-blank-word () {
+    local WORDCHARS="${WORDCHARS:s@/@}"
+    zle vi-forward-blank-word
+}
+zle -N slash-vi-forward-blank-word
+
+function slash-vi-forward-word-end () {
+    local WORDCHARS="${WORDCHARS:s@/@}"
+    zle vi-forward-word-end
+}
+zle -N slash-vi-forward-word-end
+
+function slash-vi-forward-word () {
+    local WORDCHARS="${WORDCHARS:s@/@}"
+    zle vi-forward-word
+}
+zle -N slash-vi-forward-word
+
 # End of lines added by compinstall
 # Lines configured by zsh-newuser-install
 
