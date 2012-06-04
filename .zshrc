@@ -148,6 +148,14 @@ bindkey -a  '^U'        backward-kill-line
 bindkey -v  '^[[33~'    slash-backward-kill-word
 bindkey -a  '^[[33~'    slash-backward-kill-word
 
+# i can't stand the cursor stopping on last insert position
+bindkey -v  '^H'        backward-delete-char
+bindkey -a  '^H'        backward-delete-char
+
+# i can't stand the cursor stopping on last insert position
+bindkey -v  '^?'        backward-delete-char
+bindkey -a  '^?'        backward-delete-char
+
 bindkey -v  '^B'        slash-vi-backward-word
 bindkey -a  '^B'        slash-vi-backward-word
 
