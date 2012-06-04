@@ -41,18 +41,16 @@ zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
 autoload -Uz compinit
 compinit
 
-slash-backward-kill-word() {
+function slash-backward-kill-word () {
     local WORDCHARS="${WORDCHARS:s@/@}"
     zle backward-kill-word
 }
-
 zle -N slash-backward-kill-word
 
-slash-vi-backward-word() {
+function slash-vi-backward-word () {
     local WORDCHARS="${WORDCHARS:s@/@}"
     zle vi-backward-word
 }
-
 zle -N slash-vi-backward-word
 
 # End of lines added by compinstall
