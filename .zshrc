@@ -193,6 +193,12 @@ bindkey -a  '^R'        history-incremental-search-backward
 bindkey -v  '^S'        history-incremental-search-forward
 bindkey -a  '^S'        history-incremental-search-forward
 
+bindkey -a  'B'         slash-vi-backward-blank-word
+bindkey -a  'E'         slash-vi-forward-blank-word-end
+bindkey -a  'W'         slash-vi-forward-blank-word
+bindkey -a  'b'         slash-vi-backward-word
+bindkey -a  'e'         slash-vi-forward-word-end
+bindkey -a  'w'         slash-vi-forward-word
 
 REPORTTIME=2
 TIMEFMT="
