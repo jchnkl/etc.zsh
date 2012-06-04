@@ -228,6 +228,9 @@ if [[ -x $(which fasd) ]] {
     eval "$(fasd --init auto)"
 }
 
+# override fasd default completer set by auto; adds '_original'
+zstyle ':completion:*' _original _complete _ignored _fasd_zsh_word_complete_trigger
+
 source ${HOME}/.profile
 
 # history widget:
