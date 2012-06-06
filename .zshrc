@@ -167,11 +167,11 @@ zle -N edit-command-line
 
 # sets viins as default and link it to main
 bindkey -v
-bindkey     "^[[Z"      reverse-menu-complete
 bindkey -a  v           edit-command-line
 
 bindkey -v  '^U'        backward-kill-line
 bindkey -a  '^U'        backward-kill-line
+bindkey            '^[[Z'      reverse-menu-complete
 
 bindkey -v  '^[[33~'    slash-backward-kill-word
 bindkey -a  '^[[33~'    slash-backward-kill-word
