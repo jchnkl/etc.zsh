@@ -186,6 +186,7 @@ bindkey -a  '^?'        backward-delete-char
 
 bindkey -v  '^B'        slash-vi-backward-word
 bindkey -a  '^B'        slash-vi-backward-word
+bindkey -a         '/'         history-incremental-search-backward
 
 bindkey -v  '^R'        history-incremental-search-backward
 bindkey -a  '^R'        history-incremental-search-backward
