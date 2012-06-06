@@ -167,40 +167,43 @@ zle -N edit-command-line
 
 # sets viins as default and link it to main
 bindkey -v
-bindkey -a  v           edit-command-line
 
-bindkey -v  '^U'        backward-kill-line
-bindkey -a  '^U'        backward-kill-line
 bindkey            '^[[Z'      reverse-menu-complete
 
-bindkey -v  '^[[33~'    slash-backward-kill-word
-bindkey -a  '^[[33~'    slash-backward-kill-word
+bindkey -a         'v'         edit-command-line
+
+bindkey -v         '^U'        backward-kill-line
+bindkey -a         '^U'        backward-kill-line
+
+bindkey -v         '^[[33~'    slash-backward-kill-word
+bindkey -a         '^[[33~'    slash-backward-kill-word
 
 # i can't stand the cursor stopping on last insert position
-bindkey -v  '^H'        backward-delete-char
-bindkey -a  '^H'        backward-delete-char
+bindkey -v         '^H'        backward-delete-char
+bindkey -a         '^H'        backward-delete-char
 
 # i can't stand the cursor stopping on last insert position
-bindkey -v  '^?'        backward-delete-char
-bindkey -a  '^?'        backward-delete-char
+bindkey -v         '^?'        backward-delete-char
+bindkey -a         '^?'        backward-delete-char
 
-bindkey -v  '^B'        slash-vi-backward-word
-bindkey -a  '^B'        slash-vi-backward-word
+bindkey -v         '^B'        slash-vi-backward-word
+bindkey -a         '^B'        slash-vi-backward-word
+
 bindkey -a         '/'         history-incremental-search-backward
+bindkey -v         '^R'        history-incremental-search-backward
+bindkey -a         '^R'        history-incremental-search-backward
 
-bindkey -v  '^R'        history-incremental-search-backward
-bindkey -a  '^R'        history-incremental-search-backward
+bindkey -v         '^S'        history-incremental-search-forward
+bindkey -a         '^S'        history-incremental-search-forward
 
-bindkey -v  '^S'        history-incremental-search-forward
-bindkey -a  '^S'        history-incremental-search-forward
 bindkey -M isearch '^['        accept-search
 
-bindkey -a  'B'         slash-vi-backward-blank-word
-bindkey -a  'E'         slash-vi-forward-blank-word-end
-bindkey -a  'W'         slash-vi-forward-blank-word
-bindkey -a  'b'         slash-vi-backward-word
-bindkey -a  'e'         slash-vi-forward-word-end
-bindkey -a  'w'         slash-vi-forward-word
+bindkey -a         'B'         slash-vi-backward-blank-word
+bindkey -a         'E'         slash-vi-forward-blank-word-end
+bindkey -a         'W'         slash-vi-forward-blank-word
+bindkey -a         'b'         slash-vi-backward-word
+bindkey -a         'e'         slash-vi-forward-word-end
+bindkey -a         'w'         slash-vi-forward-word
 
 REPORTTIME=2
 TIMEFMT="
