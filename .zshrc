@@ -193,6 +193,7 @@ bindkey -a  '^R'        history-incremental-search-backward
 
 bindkey -v  '^S'        history-incremental-search-forward
 bindkey -a  '^S'        history-incremental-search-forward
+bindkey -M isearch '^['        accept-search
 
 bindkey -a  'B'         slash-vi-backward-blank-word
 bindkey -a  'E'         slash-vi-forward-blank-word-end
