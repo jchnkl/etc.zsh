@@ -278,6 +278,21 @@ if [[ -x $(which fasd) ]] {
 # override fasd default completer set by auto; adds '_original'
 zstyle ':completion:*' _original _complete _ignored _fasd_zsh_word_complete_trigger
 
+## don't complete backup files as executables
+zstyle ':completion:*:complete:-command-::commands' ignored-patterns '*\~'
+
+## filename suffixes to ignore during completion (except after rm command)
+zstyle ':completion:*:*:(^rm):*:*files' ignored-patterns '*?.(o|c~|hi|old|pro|zwc)'
+
+## don't complete default users from /etc/passwd
+zstyle ':completion:*:*:*:users' ignored-patterns \
+    $(cut -d ':' -f 1 /etc/passwd)
+
+## ignore completion functions
+zstyle ':completion:*:functions' ignored-patterns '_*'
+
+
+
 source ${HOME}/.profile
 
 # history widget:
