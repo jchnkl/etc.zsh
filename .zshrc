@@ -295,6 +295,10 @@ zstyle ':completion:*:functions' ignored-patterns '_*'
 
 source ${HOME}/.profile
 
+# TODO
 # history widget:
 # read from global histfile for completion
 # use a session local histfile (fc -p)
+#
+# ^O back to original
+# wordsplit at '.' and '/'
