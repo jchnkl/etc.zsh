@@ -175,8 +175,8 @@ bindkey -a         'v'         edit-command-line
 bindkey -v         '^U'        backward-kill-line
 bindkey -a         '^U'        backward-kill-line
 
-bindkey -v         '^[[33~'    slash-backward-kill-word
-bindkey -a         '^[[33~'    slash-backward-kill-word
+bindkey -v         '^[[34~'    slash-backward-kill-word
+bindkey -a         '^[[34~'    slash-backward-kill-word
 
 # i can't stand the cursor stopping on last insert position
 bindkey -v         '^H'        backward-delete-char
