@@ -162,6 +162,11 @@ function updateBatteryPrompt () {
 
     if [[ -z $reply ]] {
         plainElements+=(  "sbattery" ""                 )
+        elementSizes+=(   "sbattery" 0                  )
+        colorFunctions+=( "sbattery" ""                 )
+        plainElements+=(  "lbattery" ""                 )
+        elementSizes+=(   "lbattery" 0                  )
+        colorFunctions+=( "lbattery" ""                 )
         return
     } else {
         sbatcolor=${reply[2]}
