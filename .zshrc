@@ -284,7 +284,7 @@ zstyle ':completion:*:complete:-command-::commands' ignored-patterns '*\~'
 ## filename suffixes to ignore during completion (except after rm command)
 zstyle ':completion:*:*:(^rm):*:*files' ignored-patterns '*?.(o|c~|hi|old|pro|zwc)'
 
-zstyle ':completion:*:*:zathura:*:*' file-patterns '*.(dvi|pdf|ps)'
+zstyle ':completion:*:*:(zathura|evince):*:*' file-patterns '*.(dvi|pdf|ps)'
 
 ## don't complete default users from /etc/passwd
 zstyle ':completion:*:*:*:users' ignored-patterns \
