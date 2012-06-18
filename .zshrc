@@ -294,6 +294,14 @@ zstyle ':completion:*:*:*:users' ignored-patterns \
 zstyle ':completion:*:functions' ignored-patterns '_*'
 
 
+function TRAPWINCH () {
+    if [[ -n "$TMUX" && $COLUMNS -lt 80 ]] {
+        tmux select-layout main-vertical
+    }
+}
+
+# unfunction TRAPWINCH
+
 
 source ${HOME}/.profile
 
