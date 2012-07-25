@@ -1,10 +1,24 @@
 # colors
-local _norm=14   # 66
-local _tone=59   # 237 # 23 # 240
-local _sout=3
-local _emph=251
-local _dirc=4
-local _yell=1
+
+local style=dark
+
+if [[ ${style} == "dark" ]] {
+    local _norm=14   # 66
+    local _tone=59   # 237 # 23 # 240
+    local _sout=3
+    local _emph=251
+    local _dirc=4
+    local _yell=1
+    local _bg=0
+} else {
+    local _norm=12  # base00 // #839496
+    local _tone=252
+    local _sout=3   # yellow // #b58900
+    local _emph=10  # base1  // #586e75
+    local _dirc=4   # blue   // #268bd2
+    local _yell=1   # red    // #dc322f
+    local _bg=7     # base02 // #eee8d5
+}
 
 
 typeset -A colors
@@ -16,11 +30,11 @@ colors+=( "host"     $_sout )
 
 
 function leftBrktColor () {
-    echo "%0K%${_tone}F${plainElements[$1]}%f"
+    echo "%${_bg}K%${_tone}F${plainElements[$1]}%f"
 }
 
 function rightBrktColor () {
-    echo "%${_tone}F${plainElements[$1]}%f%k"
+    echo "%${_bg}K%${_tone}F${plainElements[$1]}%f%k"
 }
 
 function historyColor () {
