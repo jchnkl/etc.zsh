@@ -5,6 +5,7 @@ zstyle ':vcs_info:*' max-exports 5
 zstyle ':vcs_info:*' stagedstr "%3F"
 zstyle ':vcs_info:*' unstagedstr "%9F"
 zstyle ':vcs_info:*' formats "%b" "%r" "%s" "%S" "%c%u"
+zstyle ':vcs_info:*' actionformats "%b" "%r" "%s" "%S" "%c%u"
 zstyle ':vcs_info:*' check-for-changes true
 
 zstyle ':vcs_info:git+pre-get-data:*:*' hooks updateVCSPrompt
