@@ -306,7 +306,6 @@ function TRAPWINCH () {
     done
 }
 
-# unfunction TRAPWINCH
 
 
 source ${HOME}/.profile
