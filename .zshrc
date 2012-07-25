@@ -301,9 +301,9 @@ zstyle ':completion:*:functions' ignored-patterns '_*'
 
 
 function TRAPWINCH () {
-    if [[ -n "$TMUX" && $COLUMNS -lt 80 ]] {
-        tmux select-layout main-vertical
-    }
+    for f in $precmd_functions; do
+        eval $f
+    done
 }
 
 # unfunction TRAPWINCH
