@@ -83,6 +83,12 @@ function slash-vi-forward-word () {
 }
 zle -N slash-vi-forward-word
 
+function accept-search-vi-cmd-mode () {
+    zle accept-search
+    zle vi-cmd-mode
+}
+zle -N accept-line-vi-cmd-mode
+
 # End of lines added by compinstall
 # Lines configured by zsh-newuser-install
 
@@ -196,7 +202,7 @@ bindkey -a         '^R'        history-incremental-search-backward
 bindkey -v         '^S'        history-incremental-search-forward
 bindkey -a         '^S'        history-incremental-search-forward
 
-bindkey -M isearch '^['        accept-search
+bindkey -M isearch '^['        accept-search-vi-cmd-mode
 
 bindkey -a         'B'         slash-vi-backward-blank-word
 bindkey -a         'E'         slash-vi-forward-blank-word-end
