@@ -1,6 +1,10 @@
 # colors
 
-local style=light
+if [[ "$TERM" = "linux" ]] {
+    local style=dark
+} else {
+    local style=light
+}
 
 if [[ ${style} == "dark" ]] {
     local _norm=14   # 66
