@@ -27,6 +27,8 @@ function updateWeather() {
     local _COND="$(grep "Weather:" ${WEATHERFILE} | cut -d ' ' -f 2-)"
     local _SKYC="$(grep "Sky conditions:" ${WEATHERFILE} | cut -d ' ' -f 3-)"
 
+    if [ -z ${_TEMP} ]; then reply= ; return 1; fi
+
     local TCOLOR
     if [ ${_TEMP} -le 4 ]; then TCOLOR=4 # blue;
     elif [ ${_TEMP} -le 10 ]; then TCOLOR=6 #cyan;
