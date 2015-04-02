@@ -34,19 +34,19 @@ colors+=( "host"     $_sout )
 
 
 function leftBrktColor () {
-    echo "%${_bg}K%${_tone}F${plainElements[$1]}%f"
+    echo "%K{${_bg}}%F{${_tone}}${plainElements[$1]}%f"
 }
 
 function rightBrktColor () {
-    echo "%${_bg}K%${_tone}F${plainElements[$1]}%f%k"
+    echo "%K{${_bg}}%F{${_tone}}${plainElements[$1]}%f%k"
 }
 
 function historyColor () {
-    echo "%${_norm}F!%${_emph}F%h%f"
+    echo "%F{${_norm}}!%F{${_emph}}%h%f"
 }
 
 function bangColor () {
-    echo "%(!.%1F#%f.%4F$%f)"
+    echo "%(!.%F{1}#%f.%F{4}$%f)"
 }
 
 

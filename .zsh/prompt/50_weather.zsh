@@ -15,7 +15,7 @@ function updateWeather() {
     local pelems=
     typeset -A pelems
     pelems+=(${_WS}     "${_WS}")
-    pelems+=(${_COMMA}  "%${_tone}F${_COMMA}%f")
+    pelems+=(${_COMMA}  "%F{${_tone}}${_COMMA}%f")
 
     local WEATHERFILE=${HOME}/.zsh/weather
     if [ ! -s ${WEATHERFILE} ]; then
@@ -37,12 +37,12 @@ function updateWeather() {
     fi
 
     local _PTEMP="%{%${#_TEMP}G${_TEMP}%}°C"
-    pelems+=(${_PTEMP} "%${TCOLOR}F%{%${#_TEMP}G${_TEMP}%}%${_norm}F°C%f")
+    pelems+=(${_PTEMP} "%F{${TCOLOR}}%{%${#_TEMP}G${_TEMP}%}%F{${_norm}}°C%f")
 
     local _PWIND=
     if [ -n "${_WIND}" ]; then
         _PWIND="%{%${#_WIND}G${_WIND}%}kmh"
-        pelems+=(${_PWIND} "%${_norm}F%{%${#_WIND}G${_WIND}%}kmh%f")
+        pelems+=(${_PWIND} "%F{${_norm}}%{%${#_WIND}G${_WIND}%}kmh%f")
     fi
 
     # global variable
@@ -57,7 +57,7 @@ function updateWeather() {
         local _PCOND= _CCOND=
         for c in ${(s:\0:S)${_COND}//(; |, )/'\0'}; do # split at commas and semicolons
           _PCOND+=(%{%${#c}G${c}%})
-          _CCOND+=(%${_norm}F%{%${#c}G${c}%}%${_tone}F)
+          _CCOND+=(%F{${_norm}}%{%${#c}G${c}%}%F{${_tone}})
         done
 
         # join with ', '; remove a head comma (, ) if necessary (#)
@@ -68,7 +68,7 @@ function updateWeather() {
     # Sky Conditions is not always present
     if [ -n "${_SKYC}" ]; then
         local _PSKYC="%{%${#_SKYC}G${_SKYC}%}"
-        pelems+=(${_PSKYC} "%${_norm}F%{%${#_SKYC}G${_SKYC}%}%f")
+        pelems+=(${_PSKYC} "%F{${_norm}}%{%${#_SKYC}G${_SKYC}%}%f")
         _WP+=(${(s:\0:)_PSEP} ${_PSKYC})
     fi
 

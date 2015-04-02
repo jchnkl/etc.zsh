@@ -32,56 +32,56 @@ function updateBattery() {
         local _LTIME=" ${_PHORS}:${_PMINS} "
         local _STIME="${_STATEI}${_PHORS}:${_PMINS}"
         local _CLTIME= _CSTIME=
-        local _FG2="%0F"
+        local _FG2="%F{0}"
 
         if [ ${REMP} -gt 94 ]; then
             local C=2
-            _CLTIME="%${C}K${_FG2} ${_STIME}%f %k"
-            _CSTIME="%${C}K${_FG2}${_STIME}%f%k"
+            _CLTIME="%K{${C}}${_FG2} ${_STIME}%f %k"
+            _CSTIME="%K{${C}}${_FG2}${_STIME}%f%k"
 
         elif [ ${REMP} -gt 73 ]; then
             local C=2
-            _CLTIME=" %${C}K${_FG2}${_STIME}%f %k"
-            _CSTIME="%${C}K${_FG2}${_STIME}%f%k"
+            _CLTIME=" %K{${C}}${_FG2}${_STIME}%f %k"
+            _CSTIME="%K{${C}}${_FG2}${_STIME}%f%k"
 
         elif [ ${REMP} -gt 52 ]; then
             local C=2
-            _CLTIME=" ${_CSTATE}%${C}K${_FG2}${_PHORS}:${_PMINS}%f %k"
-            _CSTIME="${_CSTATE}%${C}K${_FG2}${_PHORS}:${_PMINS}%f%k"
+            _CLTIME=" ${_CSTATE}%K{${C}}${_FG2}${_PHORS}:${_PMINS}%f %k"
+            _CSTIME="${_CSTATE}%K{${C}}${_FG2}${_PHORS}:${_PMINS}%f%k"
 
         elif [ ${REMP} -gt 32 ]; then
             local C=2
-            _CTIME="%${C}F${_PHORS[1]}${_FG2}%${C}K${_PHORS[2]:-0}:${_PMINS}%f"
+            _CTIME="%F{${C}}${_PHORS[1]}${_FG2}%K{${C}}${_PHORS[2]:-0}:${_PMINS}%f"
             _CLTIME=" ${_CSTATE}${_CTIME} %k"
             _CSTIME="${_CSTATE}${_CTIME}%k"
 
         elif [ ${REMP} -gt 20 ]; then
             local C=3
-            _CTIME="%${C}F${_PHORS}${_FG2}%${C}K:${_PMINS}%f"
+            _CTIME="%F{${C}}${_PHORS}${_FG2}%K{${C}}:${_PMINS}%f"
             _CLTIME=" ${_CSTATE}${_CTIME} %k"
             _CSTIME="${_CSTATE}${_CTIME}%k"
 
         elif [ ${REMP} -gt 12 ]; then
             local C=3
-            _CTIME="%${C}F${_PHORS}:${_FG2}%${C}K${_PMINS}%f"
+            _CTIME="%F{${C}}${_PHORS}:${_FG2}%K{${C}}${_PMINS}%f"
             _CLTIME=" ${_CSTATE}${_CTIME} %k"
             _CSTIME="${_CSTATE}${_CTIME}%k"
 
         elif [ ${REMP} -gt 8 ]; then
             local C=9
-            _CTIME="%${C}F${_PHORS}:${_PMINS[1]:-0}${_FG2}%${C}K${_PMINS[2]:-0}%f"
+            _CTIME="%F{${C}}${_PHORS}:${_PMINS[1]:-0}${_FG2}%K{${C}}${_PMINS[2]:-0}%f"
             _CLTIME=" ${_CSTATE}${_CTIME} %k"
             _CSTIME="${_CSTATE}${_CTIME}%k"
 
         elif [ ${REMP} -gt 4 ]; then
             local C=1
-            _CTIME="%${C}F${_PHORS}:${_PMINS}%f"
-            _CLTIME=" ${_CSTATE}${_CTIME}%${C}K %k"
-            _CSTIME="${_CSTATE}${_CTIME}%${C}K%k"
+            _CTIME="%F{${C}}${_PHORS}:${_PMINS}%f"
+            _CLTIME=" ${_CSTATE}${_CTIME}%K{${C}} %k"
+            _CSTIME="${_CSTATE}${_CTIME}%K{${C}}%k"
 
         else
             local C=1
-            _CTIME="%${C}F${_PHORS}:${_PMINS}%f"
+            _CTIME="%F{${C}}${_PHORS}:${_PMINS}%f"
             _CLTIME=" ${_CSTATE}${_CTIME} "
             _CSTIME="${_CSTATE}${_CTIME}"
 
@@ -119,11 +119,11 @@ function updateBattery() {
             ;;
         charging)
             _STATEI="+"; #_CBATTERY="%2F${_PBATTERY}%f"
-            _CSTATE="%2F+%f";
+            _CSTATE="%F{2}+%f";
             ;;
         discharging)
             _STATEI="-"; #_CBATTERY="%1F${_PBATTERY}}%f"
-            _CSTATE="%9F-%f";
+            _CSTATE="%F{9}-%f";
             ;;
     esac
 
