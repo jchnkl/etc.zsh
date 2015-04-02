@@ -1,6 +1,6 @@
 # colors
 
-local style=dark
+local style=light
 
 if [[ ${style} == "dark" ]] {
     local _norm=14   # 66
