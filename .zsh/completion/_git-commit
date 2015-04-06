@@ -1,0 +1,64 @@
+#compdef git-commit
+
+__git_commit_tags () {
+  commits=("${(@f)$(git log --pretty=format:'%h:%s')}")
+  _describe 'commits' commits
+}
+
+_git-commit () {
+  local amend_opt='--amend[amend the tip of the current branch]'
+  if __git_is_initial_commit || __git_is_in_middle_of_merge; then
+    amend_opt=
+  fi
+
+  local reset_author_opt=
+  if (( words[(I)-C|--reuse-message(=*|)|-c|--reedit-message(=*|)|--amend] )); then
+    reset_author_opt='(--author)--reset-author[make committer the author of the commit]'
+  fi
+
+  # TODO: --interactive isn't explicitly listed in the documentation.
+  _arguments -w -S -s \
+    '(-a --all --interactive -o --only -i --include *)'{-a,--all}'[stage all modified and deleted paths]' \
+    '--fixup=[construct a commit message for use with rebase --autosquash]:fixup commit:__git_commit_tags' \
+    '--squash=[construct a commit message for use with rebase --autosquash]:squash commit:__git_commit_tags' \
+    $reset_author_opt \
+    '(        --porcelain --dry-run)--short[output dry run in short format]' \
+    '(--short             --dry-run)--porcelain[output dry run in porcelain-ready format]' \
+    '(--short --porcelain --dry-run -z --null)'{-z,--null}'[separate dry run entry output with NUL]' \
+    '--patch[use the interactive patch selection interface to chose which changes to commit]' \
+    '(--reset-author)--author[override the author name used in the commit]:author name' \
+    '--date=[override the author date used in the commit]:date' \
+    '(-s --signoff)'{-s,--signoff}'[add Signed-off-by line at the end of the commit message]' \
+    '(-n --no-verify)'{-n,--no-verify}'[do not look for suspicious lines the commit introduces]' \
+    '--allow-empty[allow recording an empty commit]' \
+    '--allow-empty-message[allow recording a commit with an empty message]' \
+    '--cleanup=[specify how the commit message should be cleaned up]:mode:((verbatim\:"do not change the commit message at all"
+                                                                            whitespace\:"remove leading and trailing whitespace lines"
+                                                                            strip\:"remove both whitespace and commentary lines"
+                                                                            scissors\:"same as whitespace but cut from scissor line"
+                                                                            default\:"act as '\''strip'\'' if the message is to be edited and as '\''whitespace'\'' otherwise"))' \
+    '(-e --edit --no-edit)'{-e,--edit}'[edit the commit message before committing]' \
+    '(-e --edit --no-edit)--no-edit[do not edit the commit message before committing]' \
+    '--no-post-rewrite[bypass the post-rewrite hook]' \
+    '(-a --all --interactive -o --only -i --include)'{-i,--include}'[update the given files and commit the whole index]' \
+    '(-a --all --interactive -o --only -i --include)'{-o,--only}'[commit only the given files]' \
+    '(-u --untracked-files)'{-u-,--untracked-files=}'[show files in untracked directories]::mode:((no\:"show no untracked files"
+                                                                                                  normal\:"show untracked files and directories"
+                                                                                                  all\:"show individual files in untracked directories"))' \
+    '(-q --quiet -v --verbose)'{-v,--verbose}'[show unified diff of all file changes]' \
+    '(-q --quiet -v --verbose)'{-q,--quiet}'[suppress commit summary message]' \
+    '--dry-run[only show list of paths that are to be commited or not, and any untracked]' \
+    '(         --no-status)--status[include the output of git status in the commit message template]' \
+    '(--status            )--no-status[do not include the output of git status in the commit message template]' \
+    '(-S --gpg-sign --no-gpg-sign)'{-S-,--gpg-sign=}'[GPG-sign the commit]::key id' \
+    '(-S --gpg-sign --no-gpg-sign)--no-gpg-sign[do not GPG-sign the commit]' \
+    '(-a --all --interactive -o --only -i --include *)--interactive[interactively update paths in the index file]' \
+    '*: :__git_ignore_line_inside_arguments __git_changed_files' \
+    - '(message)' \
+      {-C,--reuse-message=}'[use existing commit object with same log message]: :__git_commits' \
+      {-c,--reedit-message=}'[use existing commit object and edit log message]: :__git_commits' \
+      {-F,--file=}'[read commit message from given file]: :_files' \
+      {-m,--message=}'[use the given message as the commit message]:message' \
+      {-t,--template=}'[use file as a template commit message]:template:_files' \
+      $amend_opt
+}

@@ -4,6 +4,7 @@
 !/.zsh
 !/.zsh/02_xmcd.zsh
 !/.zsh/completion
+!/.zsh/completion/_git-commit
 !/.zsh/completion/_original
 !/.zsh/prompt
 !/.zsh/prompt/00_data.zsh
