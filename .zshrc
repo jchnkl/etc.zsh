@@ -89,6 +89,14 @@ function accept-search-vi-cmd-mode () {
 }
 zle -N accept-line-vi-cmd-mode
 
+function accept-line-disown () {
+    if ((! $#BUFFER == 0)) {
+        local BUFFER="${BUFFER} &!"
+    }
+    zle accept-line
+}
+zle -N accept-line-disown
+
 # End of lines added by compinstall
 # Lines configured by zsh-newuser-install
 
@@ -201,6 +209,9 @@ bindkey -a         '^R'        history-incremental-search-backward
 
 bindkey -v         '^S'        history-incremental-search-forward
 bindkey -a         '^S'        history-incremental-search-forward
+
+bindkey -v         '[35~'    accept-line-disown
+bindkey -a         '[35~'    accept-line-disown
 
 bindkey -M isearch '^['        accept-search-vi-cmd-mode
 
