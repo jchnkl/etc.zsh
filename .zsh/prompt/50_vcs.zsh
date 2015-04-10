@@ -86,6 +86,10 @@ updateVcsPrompt () {
 
     local _vcs_prompt= _vcs_prompt_len= _vcs_prompt_maxlen=
 
+    if [[ ! -z ${VCSH_REPO_NAME} ]]; then
+        vcs_info_msg_1_="vcsh:${VCSH_REPO_NAME}"
+    fi
+
     local _vcs_branch=${vcs_info_msg_0_}                         \
           _vcs_long_repo=${vcs_info_msg_1_}                      \
           _vcs_short_repo="%8>${ellipsis}>${vcs_info_msg_1_}%>>" \
