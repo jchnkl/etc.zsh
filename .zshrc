@@ -125,7 +125,7 @@ setopt     no_beep                \
                                   \
         no_listbeep               \
         no_alwaystoend            \
-        no_menucomplete           \
+           menucomplete           \
                                   \
            autolist               \
            automenu               \

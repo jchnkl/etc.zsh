@@ -1,19 +1,13 @@
 #autoload
 
-local ret=1
+_complete
 
-_complete && ret=0
+local original="$IPREFIX$PREFIX$SUFFIX$ISUFFIX"
+local unambiguous="${compstate[unambiguous]}"
 
-if [[ -n "$IPREFIX$PREFIX$SUFFIX$ISUFFIX" && ${compstate[nmatches]} -gt 1 ]]; then
-
-    local expl
-
-    compstate[pattern_match]='*'
-
-    _description -V original expl original
-
-    compadd "$expl[@]" -U -Q - "$IPREFIX$PREFIX$SUFFIX$ISUFFIX"
-
+if [[ -n "$original" && ${compstate[nmatches]} -gt 1 ]]; then
+    compadd -X 'original' $original ${unambiguous}
+else
+    # hack to make menucomplete more bearable
+    compadd ''
 fi
-
-return ret
