@@ -38,6 +38,9 @@ zstyle ':completion:*' menu select=long eval "$(dircolors -b)"
 zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
 #zstyle :compinstall filename '/home/jochen/.zshrc'
 
+# http://www.thregr.org/~wavexx/rnd/20141010-zsh_show_ambiguity/
+zstyle ':completion:*' show-ambiguity true
+
 autoload -Uz compinit
 compinit
 
