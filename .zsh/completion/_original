@@ -5,9 +5,14 @@ _complete
 local original="$IPREFIX$PREFIX$SUFFIX$ISUFFIX"
 local unambiguous="${compstate[unambiguous]}"
 
-if [[ -n "$original" && ${compstate[nmatches]} -gt 1 ]]; then
-    compadd -X 'original' $original ${unambiguous}
-else
-    # hack to make menucomplete more bearable
-    compadd ''
+if [[ ${compstate[nmatches]} -gt 1 ]]; then
+    if [[ -n ${unambiguous} ]]; then
+        compadd -X 'unambiguous' ${unambiguous}
+    elif [[ -n ${original} ]]; then
+        compadd -X 'original' $original ${unambiguous}
+    else
+        # hack to make menucomplete more bearable
+        # displays all completions before selecting the first completion
+        compadd ''
+    fi
 fi
