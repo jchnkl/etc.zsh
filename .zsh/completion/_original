@@ -7,7 +7,7 @@ local unambiguous="${compstate[unambiguous]}"
 
 if [[ ${compstate[nmatches]} -gt 1 ]]; then
     if [[ -n ${unambiguous} ]]; then
-        compadd -X 'unambiguous' ${unambiguous}
+        compadd -Q -X 'unambiguous' "${unambiguous}"
     elif [[ -n ${original} ]]; then
         compadd -X 'original' $original ${unambiguous}
     else
