@@ -157,7 +157,6 @@ setopt     no_beep                \
                                   \
            autocd                 \
            autopushd              \
-           cdablevars             \
            chasedots              \
            chaselinks             \
                                   \
