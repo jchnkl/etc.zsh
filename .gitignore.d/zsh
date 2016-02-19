@@ -1,12 +1,8 @@
 *
-!/.gitignore.d
 !/.gitignore.d/zsh
-!/.zsh
 !/.zsh/02_xmcd.zsh
-!/.zsh/completion
 !/.zsh/completion/_git-commit
 !/.zsh/completion/_original
-!/.zsh/prompt
 !/.zsh/prompt/00_data.zsh
 !/.zsh/prompt/10_util.zsh
 !/.zsh/prompt/20_homePrompt.zsh
