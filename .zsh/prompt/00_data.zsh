@@ -12,6 +12,7 @@ if [[ ${style} == "dark" ]] {
     local _sout=3
     local _emph=251
     local _dirc=4
+    local _dirclight=117
     local _yell=1
     local _bg=0
 } else {
@@ -20,6 +21,7 @@ if [[ ${style} == "dark" ]] {
     local _sout=3   # yellow // #b58900
     local _emph=10  # base1  // #586e75
     local _dirc=4   # blue   // #268bd2
+    local _dirclight=117
     local _yell=1   # red    // #dc322f
     local _bg=7     # base02 // #eee8d5
 }
@@ -29,6 +31,7 @@ typeset -A colors
 colors+=( "|"        $_tone )
 colors+=( ","        $_tone )
 colors+=( "@"        $_tone )
+colors+=( "<>"       $_yell )
 colors+=( "login"    $_sout )
 colors+=( "host"     $_sout )
 
@@ -64,6 +67,7 @@ plainElements+=( ","        ","                )
 plainElements+=( "["        "["                )
 plainElements+=( "]"        "]"                )
 plainElements+=( "@"        "@"                )
+plainElements+=( "<>"       "<>"               )
 plainElements+=( "!"        "!%h"              )
 plainElements+=( "#"        "%(!.#.$)"         )
 plainElements+=( "login"    "%n"               )
@@ -78,7 +82,8 @@ elementSizes+=( ","        ${#plainElements[,]}             )
 elementSizes+=( "["        ${#plainElements[\[]}            )
 elementSizes+=( "]"        ${#plainElements[\]]}            )
 elementSizes+=( "@"        ${#plainElements[${:-@}]}        )
-elementSizes+=( "!"        ${#${(%)plainElements[!]}}  )
+elementSizes+=( "<>"       ${#plainElements[${:-<>}]}       )
+elementSizes+=( "!"        ${#${(%)plainElements[!]}}       )
 elementSizes+=( "#"        ${#${(%)plainElements[${:-#}]}}  )
 elementSizes+=( "login"    ${#${(%)plainElements[login]}}   )
 elementSizes+=( "host"     ${#${(%)plainElements[host]}}    )

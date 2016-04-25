@@ -53,14 +53,38 @@ function truncatePath () {
         nextpwd="%${maxlen}<${ellipsis}<${nextpwd}%<<"
     }
 
-    echo ${(%)nextpwd}
+    echo "${(%)nextpwd}"
 
+}
+
+function oldpwd()
+{
+  local oldpwd=${OLDPWD}
+
+  if [ "${OLDPWD#${PWD}/}" = "$(id -un)" ]; then
+    oldpwd=${OLDPWD#${PWD}/}
+  elif [ "${OLDPWD}" = "${HOME}" ]; then
+    oldpwd='~'
+  elif [ "${OLDPWD}" = "$(dirname ${PWD})" ]; then
+    # oldpwd='..'
+    oldpwd=${plainElements[ellipsis]}
+  elif [ "${PWD}" = '/' ]; then
+    oldpwd=${OLDPWD#/}
+  else
+    oldpwd=${OLDPWD#${PWD}/}
+  fi
+
+  local pwd=${PWD/${HOME}/'~'}
+
+  if [ ! "x${OLDPWD}x" = "xx" -a ! "x${OLDPWD}x" = "x${PWD}x" ]; then
+    echo -en "${oldpwd}"
+  fi
 }
 
 function updatePwdPrompt () {
 
     local truncatepath=$( truncatePath                 \
-                            $(( $( maxLen ) - 2 ))     \
+                            $(( $( maxLen ) / 4 * 3 )) \
                             ${plainElements[ellipsis]} \
                             ${(%)${:-%~}}              \
                         )
@@ -70,6 +94,24 @@ function updatePwdPrompt () {
     colors+=(        "pwd" $_dirc                 )
 
 }
+
+function updateOldpwdPrompt () {
+
+    local oldpwdpath=$( truncatePath                   \
+                            $(( $( maxLen ) / 3 ))     \
+                            ${plainElements[ellipsis]} \
+                            $(oldpwd)                  \
+                      )
+
+    plainElements+=( "oldpwd" "${(%)oldpwdpath}"     )
+    elementSizes+=(  "oldpwd" ${#${(%)oldpwdpath}}   )
+    colors+=(        "oldpwd" $_dirclight            )
+
+}
+
+chpwd_functions+=( updateOldpwdPrompt )
+
+updateOldpwdPrompt
 
 chpwd_functions+=( updatePwdPrompt )
 
