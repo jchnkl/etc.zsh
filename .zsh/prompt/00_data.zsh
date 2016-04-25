@@ -30,7 +30,7 @@ if [[ ${style} == "dark" ]] {
 typeset -A colors
 colors+=( "|"        $_tone )
 colors+=( ","        $_tone )
-colors+=( "@"        $_tone )
+colors+=( "@"        $_yell )
 colors+=( "<>"       $_yell )
 colors+=( "login"    $_sout )
 colors+=( "host"     $_sout )
