@@ -103,9 +103,11 @@ function updateOldpwdPrompt () {
                             $(oldpwd)                  \
                       )
 
-    plainElements+=( "oldpwd" "${(%)oldpwdpath}"     )
-    elementSizes+=(  "oldpwd" ${#${(%)oldpwdpath}}   )
-    colors+=(        "oldpwd" $_dirclight            )
+    if [[ -n "${oldpwdpath}" ]] {
+      plainElements+=( "oldpwd" "${(%)oldpwdpath}"     )
+      elementSizes+=(  "oldpwd" ${#${(%)oldpwdpath}}   )
+      colors+=(        "oldpwd" $_dirclight            )
+    }
 
 }
 
