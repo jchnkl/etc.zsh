@@ -74,6 +74,8 @@ function oldpwd()
     oldpwd=${OLDPWD#${PWD}/}
   fi
 
+  oldpwd=${oldpwd/${HOME}/'~'}
+
   local pwd=${PWD/${HOME}/'~'}
 
   if [ ! "x${OLDPWD}x" = "xx" -a ! "x${OLDPWD}x" = "x${PWD}x" ]; then
